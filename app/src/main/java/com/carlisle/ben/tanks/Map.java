@@ -1,7 +1,6 @@
 package com.carlisle.ben.tanks;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 public class Map {
 	private Entity[][] entities;
@@ -11,7 +10,7 @@ public class Map {
 		for (int r = 0; r < image.getHeight(); r++) {
 			for (int c = 0; c < image.getWidth(); c++) {
 				if (isWall(image.getPixel(c, r))) {
-					entities[r][c] = new Wall(r, c);
+					entities[r][c] = new Wall(c, r);
 				} else {
 					entities[r][c] = null;
 				}
@@ -31,16 +30,16 @@ public class Map {
 		return entities;
 	}
 
-	public Entity getEntity(int r, int c) {
-		return entities[r][c];
+	public Entity getEntity(int x, int y) {
+		return entities[y][x];
 	}
 
-	public void setEntity(int r, int c, Entity entity) {
-		entities[r][c] = entity;
+	public void setEntity(int x, int y, Entity entity) {
+		entities[y][x] = entity;
 	}
 
-	public void moveEntity(int r1, int c1, int r2, int c2) {
-		entities[r2][c2] = entities[r1][c2];
+	public void moveEntity(int y1, int x1, int y2, int x2) {
+		entities[y2][x2] = entities[y1][x2];
 	}
 
 	private boolean isWall(int color) {

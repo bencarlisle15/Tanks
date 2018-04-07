@@ -44,7 +44,7 @@ public class Game extends Thread {
 				for (Bullet bullet: bullets) {
 					bullet.move(map);
 				}
-				drawView.upateMap(map);
+				drawView.updateMap(map);
 				Thread.sleep(5);
 			}
 		} catch (InterruptedException e) {

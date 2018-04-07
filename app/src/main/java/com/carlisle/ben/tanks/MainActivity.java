@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 				if (imageBitmap != null) {
 					Map map = new Map(imageBitmap);
 					drawView  = findViewById(R.id.draw_view);
-					drawView.setBackground(new BitmapDrawable(getResources(), imageBitmap));
+					drawView.setBackground(imageBitmap);
 					setContentView(R.layout.game_layout);
 					game = new Game(map, drawView);
 				}
