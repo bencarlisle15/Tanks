@@ -1,7 +1,6 @@
 package com.carlisle.ben.tanks;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 
 public class Map {
 	private Entity[][] entities;
