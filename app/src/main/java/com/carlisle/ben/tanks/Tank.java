@@ -61,10 +61,6 @@ public class Tank extends Entity {
         int new_yPos = get_new_yPos(yPercentage);
 		map.moveEntity(getXpos(), getYpos(), new_xPos, new_yPos);
 		setPosition(new_xPos, new_yPos);
-		Log.e("beg", "beg");
-		Log.e(String.valueOf(getXpos()), String.valueOf(getYpos()));
-		Log.e(String.valueOf(new_xPos), String.valueOf(new_yPos));
-		Log.e("fin", "fin");
 
 
 //		if (true) {
