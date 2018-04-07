@@ -39,7 +39,7 @@ public class Game extends Thread {
 					player1.move(player1XPercentage, player1YPercentage, map);
 					movePlayer1 = false;
 				}
-				if (movePlayer2) {
+				if (movePlayer1) {
 					player2.move(player2XPercentage, player2YPercentage, map);
 					movePlayer2 = false;
 				}
@@ -66,6 +66,7 @@ public class Game extends Thread {
 	public void firePlayer2() {
 		firePlayer2 = true;
 	}
+
 
 	public void movePlayer1(float xPercentage, float yPercentage) {
 		movePlayer1 = true;

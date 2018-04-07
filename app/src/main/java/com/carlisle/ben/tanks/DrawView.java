@@ -47,9 +47,9 @@ public class DrawView extends View {
 					if(entity instanceof Tank)
 					{
 						int[][] vertices = ((Tank) entity).getVertices(entity.getXpos(), entity.getYpos(), ((Tank) entity).getJoyAngle());
-						Log.e(String.valueOf(vertices[0][0]), String.valueOf(vertices[0][1]));
-						Log.e(String.valueOf(vertices[1][0]), String.valueOf(vertices[1][1]));
-						Log.e(String.valueOf(vertices[2][0]), String.valueOf(vertices[2][1]));
+//						Log.e(String.valueOf(vertices[0][0]), String.valueOf(vertices[0][1]));
+//						Log.e(String.valueOf(vertices[1][0]), String.valueOf(vertices[1][1]));
+//						Log.e(String.valueOf(vertices[2][0]), String.valueOf(vertices[2][1]));
 						g.setStrokeWidth(4);
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
 						g.setAntiAlias(true);

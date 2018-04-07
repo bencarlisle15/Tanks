@@ -1,5 +1,7 @@
 package com.carlisle.ben.tanks;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Tank extends Entity {
@@ -43,7 +45,14 @@ public class Tank extends Entity {
     }
 
     public double getJoyAngle(){
-        return Math.atan(yPercentage/xPercentage);
+		double theta;
+		if (xPercentage != 0)
+			theta = (float) Math.atan(yPercentage/ xPercentage);
+		else
+			theta = 90;
+		if (xPercentage < 0)
+			theta += Math.PI;
+		return theta;
     }
 
     private int get_new_xPos(double angle){
@@ -62,13 +71,21 @@ public class Tank extends Entity {
 
         this.xPercentage = xPercentage;
         this.yPercentage = yPercentage;
+		double angle = getJoyAngle();
+        int new_xPos = get_new_xPos(angle);
+        int new_yPos = get_new_yPos(angle);
+		map.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
+		setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+//		Log.e(String.valueOf(xPercentage), String.valueOf(yPercentage));
+//		Log.e(String.valueOf(angle),String.valueOf(angle));
+//		Log.e(String.valueOf(getXpos()), String.valueOf(getYpos()));
+//		Log.e(String.valueOf(new_xPos), String.valueOf(new_yPos));
 
-        int new_xPos;
-        int new_yPos;
 
-
+		if (true) {
+			return;
+		}
         ArrayList<Entity> hittingEntities = new ArrayList<>();
-        double angle = getJoyAngle();
 		int[] newVertex = new int[2];
 		for(int i = 0; i < Math.PI/2; i+= Math.PI/6) {
             new_xPos = get_new_xPos(angle + i);
