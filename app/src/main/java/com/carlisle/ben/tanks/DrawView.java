@@ -16,7 +16,6 @@ public class DrawView extends View {
 	private final Paint g = new Paint();
 	private Map map;
 	private Bitmap image;
-	private Rect rect;
 	private final Path path = new Path();
 	public DrawView(Context context)
 	{
@@ -38,7 +37,7 @@ public class DrawView extends View {
 
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		canvas.drawBitmap(image, null, rect, g);
+		canvas.drawBitmap(image, null, new Rect(0, 0, getWidth(), getHeight()), g);
 		for(Entity[] e : map.getEntities())
 		{
 			for(Entity entity : e)
@@ -54,6 +53,7 @@ public class DrawView extends View {
 						g.setStrokeWidth(4);
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
 						g.setAntiAlias(true);
+						g.setColor(Color.GREEN);
 						path.setFillType(Path.FillType.EVEN_ODD);
 						path.moveTo(vertices[0][0], vertices[0][1]);
 						path.lineTo(vertices[1][0], vertices[1][1]);
@@ -87,7 +87,6 @@ public class DrawView extends View {
 
 	public void setBackground(Bitmap image) {
 		this.image = image;
-		rect = new Rect(0, 0, getWidth(), getHeight());
 	}
 
 }
