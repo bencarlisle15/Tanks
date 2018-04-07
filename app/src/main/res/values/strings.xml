@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Tanks</string>
+    <string name="upload_map">Upload Map!</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
 </resources>

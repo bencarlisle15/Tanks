@@ -1,11 +1,13 @@
 package com.carlisle.ben.tanks;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 public class Map {
 	private Entity[][] entities;
 
 	public Map(Bitmap image) {
+		Log.e("FUCK YES", "EVERYTHING WOKRS");
 		entities = new Entity[image.getHeight()][image.getWidth()];
 		for (int r = 0; r < image.getHeight(); r++) {
 			for (int c = 0; c < image.getWidth(); c++) {
