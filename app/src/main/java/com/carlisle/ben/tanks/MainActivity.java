@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 			if (extras != null) {
 				imageBitmap = (Bitmap) extras.get("data");
 				if (imageBitmap != null) {
-					Map map = new Map(imageBitmap, Resources.getSystem().getDisplayMetrics().widthPixels, Resources.getSystem().getDisplayMetrics().heightPixels);
 					setContentView(R.layout.game_layout);
 					DrawView drawView = findViewById(R.id.draw_view);
 					drawView.setBackground(imageBitmap);
+					Map map = new Map(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight());
 					game = new Game(map, drawView);
 					game.start();
 				}

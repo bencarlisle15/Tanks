@@ -33,6 +33,9 @@ public class Map {
 	}
 
 	public Entity getEntity(int x, int y) {
+		if (x < 0 || y < 0 || x >= getWidth() || y >= getHeight()) {
+			return null;
+		}
 		return entities[x][y];
 	}
 
