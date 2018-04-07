@@ -24,14 +24,14 @@ public class Tank extends Entity {
     }
 
     // returns the CenterPosition
-    public double[] nextCenterPosition(){
+    public int[] nextCenterPosition(){
 
-        double tankPos[] = {super.getXpos(), super.getYpos()};
+        int tankPos[] = {super.getXpos(), super.getYpos()};
         double angle = getJoyAngle();
-        double new_xPos = (getXpos() + xSpeed + 1/2 * (Math.pow(xPercentage,2)));
-        double new_yPos = (getYpos() + ySpeed + 1/2 * (Math.pow(yPercentage,2)));
-        double newPos[] = {new_xPos, new_yPos};
-        CollisionDetectorWithTank detector = new CollisionDetectorWithTank(tankPos, newPos,angle);
+        int new_xPos = (int) (getXpos() + xSpeed + 1/2 * (Math.pow(xPercentage,2)));
+        int new_yPos = (int)(getYpos() + ySpeed + 1/2 * (Math.pow(yPercentage,2)));
+        int newPos[] = {new_xPos, new_yPos};
+        CollisionDetectorWithTank detector = new CollisionDetectorWithTank(getVertices(), newPos,angle);
 
         if(!detector.isCollision()){
             return newPos;
@@ -85,7 +85,7 @@ public class Tank extends Entity {
     }
 
     public Bullet fire(){
-        return new Bullet((int)(BULLETCONST * Math.cos (getJoyAngle())), (int)(BULLETCONST*Math.sin(getJoyAngle())));
+        return new Bullet((int)(BULLETCONST * Math.cos (getJoyAngle())),(int)(BULLETCONST * Math.cos (getJoyAngle())), getJoyAngle());
     }
 
     public void move(float xPercentage, float yPercentage, Map X){
