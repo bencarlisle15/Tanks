@@ -27,6 +27,10 @@ public class Map {
 		return entities.length;
 	}
 
+	public Entity[][] getEntities() {
+		return entities;
+	}
+
 	public Entity getEntity(int r, int c) {
 		return entities[r][c];
 	}

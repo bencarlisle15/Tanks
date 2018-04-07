@@ -25,23 +25,8 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 	}
 
 	public void promptImage(View view) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Select Method")
-				.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-						photoPickerIntent.setType("image/*");
-						startActivityForResult(photoPickerIntent, 1);
-					}
-				})
-				.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-						startActivityForResult(takePicture, 2);
-					}
-				})
-				.setIcon(android.R.drawable.ic_menu_camera)
-				.show();
+		Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(takePicture, 1);
 	}
 
 	@Override
@@ -61,33 +46,19 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 		super.onActivityResult(requestCode, resultCode, data);
 		Bitmap imageBitmap = null;
 		if (requestCode == 1) {
-			Uri selectedImage = data.getData();
-			String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-			Cursor cursor = null;
-			if (selectedImage != null) {
-				cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-			}
-
-			if (cursor != null) {
-				cursor.moveToFirst();
-				String imagePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
-				cursor.close();
-				imageBitmap = BitmapFactory.decodeFile(imagePath);
-			}
-		} else if (requestCode == 2) {
 			Bundle extras = data.getExtras();
 			if (extras != null) {
 				imageBitmap = (Bitmap) extras.get("data");
+				if (imageBitmap != null) {
+					Map map = new Map(imageBitmap);
+					drawView  = findViewById(R.id.draw_view);
+					drawView.setBackground(new BitmapDrawable(getResources(), imageBitmap));
+					setContentView(R.layout.game_layout);
+					game = new Game(map, drawView);
+				}
 			}
 		}
-		if (imageBitmap != null) {
-			Map map = new Map(imageBitmap);
-			drawView  = findViewById(R.id.draw_view);
-			drawView.setBackground(new BitmapDrawable(getResources(), imageBitmap));
-			setContentView(R.layout.game_layout);
-			game = new Game(map);
-		}
+
 	}
 
     public void firePlayer1(View v) {
