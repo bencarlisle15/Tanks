@@ -47,9 +47,11 @@ public class MainActivity extends AppCompatActivity implements GameView.Joystick
 	@Override
 	public void onJoystickMoved(float xPercent, float yPercent, int id) {
 		switch (id) {
-			case R.id.joystickRight:
-				break;
 			case R.id.joystickLeft:
+				game.movePlayer1(xPercent, yPercent);
+				break;
+			case R.id.joystickRight:
+				game.movePlayer2(xPercent, yPercent);
 				break;
 		}
 	}
@@ -88,10 +90,10 @@ public class MainActivity extends AppCompatActivity implements GameView.Joystick
 	}
 
     public void firePlayer1(View v) {
-	    tank1.fire;
+	    game.firePlayer1();
     }
 
     public void firePlayer2(View v) {
-	    tank2.fire;
+	    game.firePlayer2();
     }
 }
