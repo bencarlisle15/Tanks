@@ -42,7 +42,7 @@ public class Game extends Thread {
 					movePlayer2 = false;
 				}
 				for (Bullet bullet: bullets) {
-					bullet.move(map);
+					bullet.updatePosition(map);
 				}
 				drawView.updateMap(map);
 				Thread.sleep(5);
