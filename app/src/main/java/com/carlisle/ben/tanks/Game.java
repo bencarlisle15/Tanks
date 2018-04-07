@@ -15,8 +15,8 @@ public class Game extends Thread {
 	public Game(Map map, DrawView drawView) {
 		this.map = map;
 		this.drawView = drawView;
-		Tank player1 = new Tank(0, map.getHeight()/2, map.getWidth()/15);
-		Tank player2 = new Tank(map.getWidth(), 0, map.getWidth()/15);
+		Tank player1 = new Tank(10, map.getHeight()/2, map.getWidth()/15);
+		Tank player2 = new Tank(map.getWidth() - 10, map.getHeight()/2, map.getWidth()/15);
 		map.setEntity(player1.getXpos(), player1.getYpos(), player1);
 		map.setEntity(player2.getXpos(), player2.getYpos(), player2);
 		bullets = new ArrayList<>();

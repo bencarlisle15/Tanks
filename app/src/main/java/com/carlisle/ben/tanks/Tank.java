@@ -26,23 +26,6 @@ public class Tank extends Entity {
         this.width = width;
     }
 
-    // returns the CenterPosition
-    public int[] nextCenterPosition(){
-
-        int tankPos[] = {super.getXpos(), super.getYpos()};
-        double angle = getJoyAngle();
-        int new_xPos = get_new_xPos(angle);
-        int new_yPos = get_new_yPos(angle);
-        int newPos[] = {new_xPos, new_yPos};
-        CollisionDetectorWithTank detector = new CollisionDetectorWithTank(getVertices(), newPos,angle);
-
-        if(!detector.isCollision()){
-            return newPos;
-        }
-
-        return tankPos;
-    }
-
     private boolean validAngle(int checkAngle) {
 
         if(checkAngle < 0 || checkAngle > Math.PI){
@@ -59,7 +42,7 @@ public class Tank extends Entity {
         this.yPercentage = yPercentage;
     }
 
-    private double getJoyAngle(){
+    public double getJoyAngle(){
         return Math.atan(yPercentage/xPercentage);
     }
 

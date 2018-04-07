@@ -45,7 +45,7 @@ public class DrawView extends View {
 				{
 					if(entity instanceof Tank)
 					{
-						int[][] vertices = ((Tank) entity).getVertices();
+						int[][] vertices = ((Tank) entity).getVertices(entity.getXpos(), entity.getYpos(), ((Tank) entity).getJoyAngle());
 						g.setColor(Color.GREEN);
 						g.setStyle(Paint.Style.FILL);
 						Path path = new Path();
