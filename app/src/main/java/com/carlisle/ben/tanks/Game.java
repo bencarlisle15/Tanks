@@ -39,7 +39,7 @@ public class Game extends Thread {
 					player1.move(player1XPercentage, player1YPercentage, map);
 					movePlayer1 = false;
 				}
-				if (movePlayer1) {
+				if (movePlayer2) {
 					player2.move(player2XPercentage, player2YPercentage, map);
 					movePlayer2 = false;
 				}
