@@ -6,15 +6,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
+public class MainActivity extends AppCompatActivity implements GameView.JoystickListener {
 
-	private Map map;
+	private Game game;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +44,15 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 				.show();
 	}
 
-    @Override
-    public void onJoystickMoved(float xPercent, float yPercent, int id) {
-        switch (id) {
-            case R.id.joystickRight:
-                Log.d("Right Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
-                break;
-            case R.id.joystickLeft:
-                Log.d("Left Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
-                break;
-        }
-    }
+	@Override
+	public void onJoystickMoved(float xPercent, float yPercent, int id) {
+		switch (id) {
+			case R.id.joystickRight:
+				break;
+			case R.id.joystickLeft:
+				break;
+		}
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -75,13 +74,24 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 				imageBitmap = BitmapFactory.decodeFile(imagePath);
 			}
 		} else if (requestCode == 2) {
-				Bundle extras = data.getExtras();
+			Bundle extras = data.getExtras();
 			if (extras != null) {
 				imageBitmap = (Bitmap) extras.get("data");
 			}
 		}
 		if (imageBitmap != null) {
-			map = new Map(imageBitmap);
+			Map map = new Map(imageBitmap);
+			setContentView(R.layout.game_layout);
+			getWindow().getDecorView().setBackground(new BitmapDrawable(getResources(), imageBitmap));
+			game = new Game(map);
 		}
 	}
+
+    public void firePlayer1(View v) {
+	    tank1.fire;
+    }
+
+    public void firePlayer2(View v) {
+	    tank2.fire;
+    }
 }

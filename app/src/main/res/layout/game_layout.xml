@@ -27,29 +27,14 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/joystickRight"
-        android:layout_toLeftOf="@+id/joystickRight" />
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/joystickLeft"
-        android:layout_toRightOf="@+id/joystickLeft"/>
-       " />
+        android:layout_alignParentRight="true"
+        android:onClick="firePlayer1"/>
 
     <Button
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
-    " />
-
+        android:layout_alignParentTop="true"
+        android:onClick="firePlayer2"/>
 </RelativeLayout>
