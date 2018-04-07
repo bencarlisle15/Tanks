@@ -1,6 +1,7 @@
 package com.carlisle.ben.tanks;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,14 +14,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
 {
     private float centerX;
     private float centerY;
     private float baseRadius;
     private float hatRadius;
     private JoystickListener joystickCallback;
-    private final int ratio = 5; //The smaller, the more shading will occur
+    private final int ratio = 3; //The smaller, the more shading will occur
 
     private void setupDimensions()
     {
@@ -30,7 +31,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         hatRadius = Math.min(getWidth(), getHeight()) / 5;
     }
 
-    public JoystickView(Context context)
+    public GameView(Context context)
     {
         super(context);
         getHolder().addCallback(this);
@@ -39,7 +40,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             joystickCallback = (JoystickListener) context;
     }
 
-    public JoystickView(Context context, AttributeSet attributes, int style)
+    public GameView(Context context, AttributeSet attributes, int style)
     {
         super(context, attributes, style);
         getHolder().addCallback(this);
@@ -48,7 +49,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             joystickCallback = (JoystickListener) context;
     }
 
-    public JoystickView (Context context, AttributeSet attributes)
+    public GameView(Context context, AttributeSet attributes)
     {
         super(context, attributes);
         getHolder().addCallback(this);
@@ -63,7 +64,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         {
             Canvas myCanvas = this.getHolder().lockCanvas(); //Stuff to draw
             Paint colors = new Paint();
-            myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); // Clear the BG
+            myCanvas.drawColor(Color.WHITE); // Clear the BG
 
             //First determine the sin and cos of the angle that the touched point is at relative to the center of the joystick
             float hypotenuse = (float) Math.sqrt(Math.pow(newX - centerX, 2) + Math.pow(newY - centerY, 2));
@@ -83,7 +84,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             //Drawing the joystick hat
             for(int i = 0; i <= (int) (hatRadius / ratio); i++)
             {
-                colors.setARGB(255, (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius)), 255); //Change the joystick color for shading purposes
+                colors.setARGB(255, (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius))); //Change the joystick color for shading purposes
                 myCanvas.drawCircle(newX, newY, hatRadius - (float) i * (ratio) / 2 , colors); //Draw the shading for the hat
             }
 

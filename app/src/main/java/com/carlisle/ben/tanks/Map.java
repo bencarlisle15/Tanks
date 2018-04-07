@@ -7,7 +7,6 @@ public class Map {
 	private Entity[][] entities;
 
 	public Map(Bitmap image) {
-		Log.e("FUCK YES", "EVERYTHING WORKS");
 		entities = new Entity[image.getHeight()][image.getWidth()];
 		for (int r = 0; r < image.getHeight(); r++) {
 			for (int c = 0; c < image.getWidth(); c++) {
@@ -18,6 +17,14 @@ public class Map {
 				}
 			}
 		}
+	}
+
+	public int getWidth() {
+		return entities[0].length;
+	}
+
+	public int getHeight() {
+		return entities.length;
 	}
 
 	public Entity getEntity(int r, int c) {

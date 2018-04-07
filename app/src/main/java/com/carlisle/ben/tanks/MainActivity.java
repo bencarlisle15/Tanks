@@ -1,27 +1,18 @@
 package com.carlisle.ben.tanks;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import java.io.File;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
 
 	private Map map;
 
@@ -52,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
 				.show();
 	}
 
+    @Override
+    public void onJoystickMoved(float xPercent, float yPercent, int id) {
+        switch (id) {
+            case R.id.joystickRight:
+                Log.d("Right Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
+                break;
+            case R.id.joystickLeft:
+                Log.d("Left Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
+                break;
+        }
+    }
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -68,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
 			if (cursor != null) {
 				cursor.moveToFirst();
 				String imagePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
-				imageBitmap = BitmapFactory.decodeFile(imagePath);
 				cursor.close();
+				imageBitmap = BitmapFactory.decodeFile(imagePath);
 			}
 		} else if (requestCode == 2) {
 				Bundle extras = data.getExtras();
