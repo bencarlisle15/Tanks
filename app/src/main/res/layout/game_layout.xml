@@ -29,6 +29,8 @@
 
     <Button
         android:layout_width="100dp"
+        android:background="#33192192192"
+        android:text="FIRE!"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
@@ -36,6 +38,8 @@
         android:onClick="firePlayer1"/>
 
     <Button
+        android:background="#33192192192"
+        android:text="FIRE!"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
