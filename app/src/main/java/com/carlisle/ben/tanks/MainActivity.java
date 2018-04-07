@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
 	public void promptImage(View view) {
 		Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(takePicture, 1);
+		startActivityForResult(takePicture, 0);
 	}
 
 	@Override
@@ -39,15 +39,15 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Bitmap imageBitmap = null;
-		if (requestCode == 1) {
+		if (requestCode == 0) {
 			Bundle extras = data.getExtras();
 			if (extras != null) {
 				imageBitmap = (Bitmap) extras.get("data");
 				if (imageBitmap != null) {
 					Map map = new Map(imageBitmap, Resources.getSystem().getDisplayMetrics().widthPixels, Resources.getSystem().getDisplayMetrics().heightPixels);
+					setContentView(R.layout.game_layout);
 					DrawView drawView = findViewById(R.id.draw_view);
 					drawView.setBackground(imageBitmap);
-					setContentView(R.layout.game_layout);
 					game = new Game(map, drawView);
 				}
 			}

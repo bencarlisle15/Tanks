@@ -8,11 +8,11 @@ public class Map {
 	public Map(Bitmap image, int gameWidth, int gameHeight) {
 		Bitmap newImage = Bitmap.createScaledBitmap(
 				image, gameWidth, gameHeight, false);
-		entities = new Entity[newImage.getHeight()][newImage.getWidth()];
-		for (int r = 0; r < newImage.getHeight(); r++) {
-			for (int c = 0; c < newImage.getWidth(); c++) {
-				if (isWall(newImage.getPixel(c, r)) || c == 0 || r == 0 || r == newImage.getWidth() - 1 || c == newImage.getHeight() - 1) {
-					entities[r][c] = new Wall(c, r);
+		entities = new Entity[gameWidth][gameHeight];
+		for (int r = 0; r < newImage.getWidth(); r++) {
+			for (int c = 0; c < newImage.getHeight(); c++) {
+				if (getEntity(r, c) == null && isWall(newImage.getPixel(r, c)) || c == 0 || r == 0 || r == newImage.getWidth() - 1 || c == newImage.getHeight() - 1) {
+					entities[r][c] = new Wall(r, c);
 				} else {
 					entities[r][c] = null;
 				}

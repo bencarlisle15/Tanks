@@ -1,5 +1,7 @@
 package com.carlisle.ben.tanks;
 
+import java.util.ArrayList;
+
 public class Tank extends Entity {
 
     private boolean canFire;
@@ -41,33 +43,9 @@ public class Tank extends Entity {
         return tankPos;
     }
 
-    private double getTopTriangleXposition(){
-        return getXpos() + UPVALUEINC * width;
-    }
-
-    private double getTopYTriangleposition(){
-        return getYpos();
-    }
-
-    private double getBotRightXTrianglePosition(){
-        return getXpos() + LEFTVALUEDEC * width;
-    }
-
-    private double getBotRightYTrianglePosition(){
-        return getYpos() - RIGHTVALUEINC * width;
-    }
-
-    private double getBotLeftXTrianglePosition(){
-        return getXpos() - LEFTVALUEDEC * width;
-    }
-
-    private double getBotLeftYTrianglePosition(){
-        return getYpos() + RIGHTVALUEINC * width;
-    }
-
     private boolean validAngle(int checkAngle) {
 
-        if(checkAngle < 0 || checkAngle > 360){
+        if(checkAngle < 0 || checkAngle > Math.PI){
             return false;
         }
         return true;
@@ -106,28 +84,52 @@ public class Tank extends Entity {
         int new_yPos;
 
 
-        for(int i = 0; i < 90; i+= 10) {
-
-
-            new_xPos = get_new_xPos(i);
-            new_yPos = get_new_yPos(i);
-
-            if (!((map.getEntity(new_xPos, new_yPos)) instanceof Wall) && !(map.getEntity(new_xPos, new_yPos) instanceof Tank)) {
-                super.setPosition(new_xPos, new_yPos);
+        ArrayList<Entity> hittingEntities = new ArrayList<>();
+        double angle = getJoyAngle();
+		int[] newVertex = new int[2];
+		for(int i = 0; i < 90; i+= 10) {
+            new_xPos = get_new_xPos(angle + i);
+            new_yPos = get_new_yPos(angle + i);
+            hittingEntities = getObjectsWithinRadius(new_xPos, new_yPos);
+            for (Entity entity: hittingEntities) {
+                if (entity != null) {
+					newVertex[0] = entity.getXpos();
+					newVertex[1] = entity.getYpos();
+                    if (!(new CollisionDetectorWithTank(getVertices(new_xPos, new_yPos, getJoyAngle() + i), newVertex).isCollision())) {
+                    	angle = angle + i;
+						map.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
+						setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+					}
+                }
             }
-
-
+			new_xPos = get_new_xPos(angle - i);
+			new_yPos = get_new_yPos(angle - i);
+			hittingEntities = getObjectsWithinRadius(new_xPos, new_yPos);
+			for (Entity entity: hittingEntities) {
+				if (entity != null) {
+					newVertex[0] = entity.getXpos();
+					newVertex[1] = entity.getYpos();
+					if (!(new CollisionDetectorWithTank(getVertices(new_xPos, new_yPos, getJoyAngle() - i), newVertex).isCollision())) {
+						angle = angle - i;
+						map.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
+						setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+					}
+				}
+			}
         }
     }
 
+	private ArrayList<Entity> getObjectsWithinRadius(int new_xPos, int new_yPos) {
+    	//TODO check all objects within a 1.3*width radius of the new pos of the tank
+		return null;
+	}
 
 
-    public int [][]  getVertices(){
+	public int [][]  getVertices(int newXPos, int newYPos, double newAngle){
 
-        int [][] vertices = {{(int)getTopTriangleXposition(),(int)getTopYTriangleposition()},
-                { (int)getBotRightXTrianglePosition(), (int)getBotRightYTrianglePosition()},
-                {(int)getBotLeftXTrianglePosition(), (int)getBotLeftYTrianglePosition()}};
+        int [][] vertices = {{(int) (newXPos + width),(int) newYPos},
+                { (int) (newXPos + 0.3 * width), (int) (newYPos - 0.5 * width)},
+                {(int) (newXPos - 0.3 * width), (int) (newYPos + 0.5 * width)}};
         return vertices;
     }
-
 }
