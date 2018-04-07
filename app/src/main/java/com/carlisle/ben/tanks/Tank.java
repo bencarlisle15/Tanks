@@ -59,8 +59,11 @@ public class Tank extends Entity {
         speed = (int) (Math.sqrt(xPercentage*xPercentage + yPercentage*yPercentage)*10);
         int new_xPos = get_new_xPos(xPercentage);
         int new_yPos = get_new_yPos(yPercentage);
-		map.moveEntity(getXpos(), getYpos(), new_xPos, new_yPos);
-		setPosition(new_xPos, new_yPos);
+
+        if (new_xPos >= 0 && new_yPos >= 0 && new_xPos < map.getWidth() && new_yPos < map.getHeight() && map.getEntity(new_xPos, new_yPos) == null) {
+			map.moveEntity(getXpos(), getYpos(), new_xPos, new_yPos);
+			setPosition(new_xPos, new_yPos);
+		}
 
 
 //		if (true) {
