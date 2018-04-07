@@ -1,6 +1,7 @@
 package com.carlisle.ben.tanks;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -83,7 +84,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             //Drawing the joystick hat
             for(int i = 0; i <= (int) (hatRadius / ratio); i++)
             {
-                colors.setARGB(255, (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius)), 255); //Change the joystick color for shading purposes
+                colors.setARGB(255, (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius)), (int) (i * (255 * ratio / hatRadius))); //Change the joystick color for shading purposes
                 myCanvas.drawCircle(newX, newY, hatRadius - (float) i * (ratio) / 2 , colors); //Draw the shading for the hat
             }
 

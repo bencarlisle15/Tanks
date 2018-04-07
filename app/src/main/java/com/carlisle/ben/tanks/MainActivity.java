@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
 
 	private Map map;
 
@@ -53,6 +53,18 @@ public class MainActivity extends AppCompatActivity {
 				.setIcon(android.R.drawable.ic_menu_camera)
 				.show();
 	}
+
+    @Override
+    public void onJoystickMoved(float xPercent, float yPercent, int id) {
+        switch (id) {
+            case R.id.joystickRight:
+                Log.d("Right Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
+                break;
+            case R.id.joystickLeft:
+                Log.d("Left Joystick", "X percent: " + xPercent + " Y percent: " + yPercent);
+                break;
+        }
+    }
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

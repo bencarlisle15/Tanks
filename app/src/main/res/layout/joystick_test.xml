@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.carlisle.ben.tanks.JoystickView
-        android:id="@+id/testJoystick"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-</LinearLayout>
+
+    <com.carlisle.ben.tanks.JoystickView
+        android:id="@+id/joystickLeft"
+        android:background="@android:color/transparent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"/>
+
+    <com.carlisle.ben.tanks.JoystickView
+        android:id="@+id/joystickRight"
+        android:background="@android:color/transparent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_weight="1"/>
+
+</RelativeLayout>
