@@ -4,15 +4,14 @@ public class Tank extends Entity {
 
     private boolean canFire;
     private int xSpeed, ySpeed;
-    private int xPos, yPos;
     private int lives;
     private static double timer = 0.1;
-    private int height;
-    private static double LEFTVALUEDEC  = 0.3;
-    private static double RIGHTVALUEINC = 0.5;
-    private static double UPVALUEINC = 1.0;
+    private int width;
+    private final static double LEFTVALUEDEC  = 0.3;
+    private final static double RIGHTVALUEINC = 0.5;
+    private final static double UPVALUEINC = 1.0;
+    private final static double BULLETCONST = 10;
     private boolean isShootBottomPressed;
-    private double acceleration;
     private double xPercentage, yPercentage;
 
 
@@ -21,19 +20,18 @@ public class Tank extends Entity {
         canFire = true;
         lives = 3;
         isShootBottomPressed = false;
-
+        this.width = width;
     }
 
-
     // returns the CenterPosition
-    public double[] nextCenterPosition(){
+    public int[] nextCenterPosition(){
 
-        double tankPos[] = {xPos, yPos};
+        int tankPos[] = {super.getXpos(), super.getYpos()};
         double angle = getJoyAngle();
-        double new_xPos = (xSpeed * 1 + acceleration);
-        double new_yPos = (ySpeed * 1 + acceleration);
-        double newPos[] = {new_xPos, new_yPos};
-        CollisionDetectorWithTank detector = new CollisionDetectorWithTank(tankPos, newPos);
+        int new_xPos = (int) (getXpos() + xSpeed + 1/2 * (Math.pow(xPercentage,2)));
+        int new_yPos = (int)(getYpos() + ySpeed + 1/2 * (Math.pow(yPercentage,2)));
+        int newPos[] = {new_xPos, new_yPos};
+        CollisionDetectorWithTank detector = new CollisionDetectorWithTank(getVertices(), newPos,angle);
 
         if(!detector.isCollision()){
             return newPos;
@@ -42,28 +40,28 @@ public class Tank extends Entity {
         return tankPos;
     }
 
-
-    public double getTopTriangleXposition(){
-        return xPos - LEFTVALUEDEC*height;
+    private double getTopTriangleXposition(){
+        return getXpos() + UPVALUEINC * width;
     }
 
-    public double getTopYTriangleposition(){
-        return yPos + RIGHTVALUEINC*height;
+    private double getTopYTriangleposition(){
+        return getYpos();
     }
 
-    public double getRightXTrianglePosition(){
-        return xPos + UPVALUEINC*height;
-    }
-    public double getRightYTrianglePosition(){
-        return yPos;
+    private double getBotRightXTrianglePosition(){
+        return getXpos() + LEFTVALUEDEC * width;
     }
 
-    public double getBottomXTrianglePosition(){
-        return xPos - LEFTVALUEDEC*height;
+    private double getBotRightYTrianglePosition(){
+        return getYpos() - RIGHTVALUEINC * width;
     }
 
-    public double getBottomYTrianglePosition(){
-        return yPos - RIGHTVALUEINC*height;
+    private double getBotLeftXTrianglePosition(){
+        return getXpos() - LEFTVALUEDEC * width;
+    }
+
+    private double getBotLeftYTrianglePosition(){
+        return getYpos() + RIGHTVALUEINC * width;
     }
 
     private boolean validAngle(int checkAngle) {
@@ -83,16 +81,23 @@ public class Tank extends Entity {
     }
 
     private double getJoyAngle(){
-
         return Math.atan(yPercentage/xPercentage);
     }
 
-    public void fire(){
+    public Bullet fire(){
+        return new Bullet((int)(BULLETCONST * Math.cos (getJoyAngle())),(int)(BULLETCONST * Math.cos (getJoyAngle())), getJoyAngle());
+    }
+
+    public void move(float xPercentage, float yPercentage, Map X){
 
     }
 
-    public void move(float xPercentage, float yPercentage){
+    public int [][]  getVertices(){
 
+        int [][] vertices = {{(int)getTopTriangleXposition(),(int)getTopYTriangleposition()},
+                { (int)getBotRightXTrianglePosition(), (int)getBotRightYTrianglePosition()},
+                {(int)getBotLeftXTrianglePosition(), (int)getBotLeftYTrianglePosition()}};
+        return vertices;
     }
 
 }
