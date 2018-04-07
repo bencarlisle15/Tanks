@@ -55,7 +55,7 @@ public class Tank extends Entity {
     }
 
     public Bullet fire(){
-        return new Bullet((int)(BULLETCONST * Math.cos (getJoyAngle())),(int)(BULLETCONST * Math.cos (getJoyAngle())), getJoyAngle());
+        return new Bullet((int)(getXpos() + BULLETCONST * Math.cos (getJoyAngle())),(int)(getYpos() + BULLETCONST * Math.cos (getJoyAngle())), getJoyAngle());
     }
 
     public void move(float xPercentage, float yPercentage, Map map){
@@ -104,7 +104,7 @@ public class Tank extends Entity {
 
 	private ArrayList<Entity> getObjectsWithinRadius(int new_xPos, int new_yPos) {
     	//TODO check all objects within a 1.3*width radius of the new pos of the tank
-		return null;
+		return new ArrayList<>();
 	}
 
 

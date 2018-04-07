@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 					DrawView drawView = findViewById(R.id.draw_view);
 					drawView.setBackground(imageBitmap);
 					game = new Game(map, drawView);
+					game.start();
 				}
 			}
 		}

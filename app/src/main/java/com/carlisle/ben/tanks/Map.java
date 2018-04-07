@@ -21,11 +21,11 @@ public class Map {
 	}
 
 	public int getWidth() {
-		return entities[0].length;
+		return entities.length;
 	}
 
 	public int getHeight() {
-		return entities.length;
+		return entities[0].length;
 	}
 
 	public Entity[][] getEntities() {
