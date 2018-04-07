@@ -86,4 +86,12 @@ public class MainActivity extends AppCompatActivity implements GameView.Joystick
 			game = new Game(map);
 		}
 	}
+
+    public void firePlayer1(View v) {
+	    tank1.fire;
+    }
+
+    public void firePlayer2(View v) {
+	    tank2.fire;
+    }
 }
