@@ -1,17 +1,18 @@
 package com.carlisle.ben.tanks;
 
-import static java.lang.Math.sin;
-
 public class Bullet extends Entity {
 
     private double angle;
     private int numBounces;
+    private double xPercentage;
+    private double yPercentage;
     private final int speed = 10;
 
     // xpos and ypos are of the tank
-    public Bullet(int xpos, int ypos, double angle) {
+    public Bullet(int xpos, int ypos, double xPercent, double yPercent) {
         super(xpos, ypos);
-        this.angle = angle;
+        this.xPercentage = xPercent;
+        this.yPercentage = yPercent;
         numBounces = 2;
     }
 
@@ -26,17 +27,17 @@ public class Bullet extends Entity {
     }
 
     public void updatePosition(Map theMap) {
-		int nextXPos = (int) (getXpos() + speed*Math.cos(angle));
-		int nextYPos = (int) (getYpos() + speed*Math.sin(angle));
+		int nextXPos = (int) (getXpos() + speed*xPercentage);
+		int nextYPos = (int) (getYpos() + speed * yPercentage);
         if (!collisionDetected(theMap, nextXPos, nextYPos)) {
-        	theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
-            setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+        	theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*xPercentage), (int) (getYpos() + speed*yPercentage));
+            setPosition((int)(getXpos() + speed*xPercentage), (int)(getYpos() + speed*yPercentage));
         } else {
-			nextXPos -= 2*Math.cos(angle);
-			nextYPos -= 2*Math.sin(angle);
+			nextXPos -= 2*xPercentage;
+			nextYPos -= 2*yPercentage;
         	for (int i = speed - 4; i >= 2 && collisionDetected(theMap, nextXPos, nextYPos); i -= 2) {
-        		nextXPos -= i*Math.cos(angle);
-        		nextYPos -= i*Math.sin(angle);
+        		nextXPos -= i*xPercentage;
+        		nextYPos -= i*yPercentage;
 			}
 			//find the slope from the first value that is not the wall
 			int slopeX1 = 0;
@@ -88,13 +89,13 @@ public class Bullet extends Entity {
 				slope1 = (slopeY1 - slopeY2) / (slopeX1 - slopeX2);
 				newAngle = Math.atan(slope1);
 				angle = newAngle - Math.abs(angle - newAngle);
-				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
-				setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*xPercentage), (int) (getYpos() + speed*yPercentage));
+				setPosition((int)(getXpos() + speed*xPercentage), (int)(getYpos() + speed*yPercentage));
 				numBounces--;
 			} else {
 				angle *= -1;
-				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
-				setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*xPercentage), (int) (getYpos() + speed*yPercentage));
+				setPosition((int)(getXpos() + speed*xPercentage), (int)(getYpos() + speed*yPercentage));
 				numBounces--;
 			}
         }
