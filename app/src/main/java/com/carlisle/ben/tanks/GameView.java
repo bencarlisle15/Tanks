@@ -21,7 +21,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     private float baseRadius;
     private float hatRadius;
     private JoystickListener joystickCallback;
-    private final int ratio = 5; //The smaller, the more shading will occur
+    private final int ratio = 3; //The smaller, the more shading will occur
 
     private void setupDimensions()
     {
@@ -64,7 +64,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         {
             Canvas myCanvas = this.getHolder().lockCanvas(); //Stuff to draw
             Paint colors = new Paint();
-            myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); // Clear the BG
+            myCanvas.drawColor(Color.WHITE); // Clear the BG
 
             //First determine the sin and cos of the angle that the touched point is at relative to the center of the joystick
             float hypotenuse = (float) Math.sqrt(Math.pow(newX - centerX, 2) + Math.pow(newY - centerY, 2));
