@@ -52,7 +52,7 @@ public class DrawView extends View {
 						path.moveTo(vertices[0][0], vertices[0][1]);
 						path.lineTo(vertices[1][0], vertices[1][1]);
 						path.moveTo(vertices[1][0], vertices[1][1]);
-						path.lineTo(vertices[2][0], vertices[2][1];
+						path.lineTo(vertices[2][0], vertices[2][1]);
 						path.moveTo(vertices[2][0], vertices[2][1]);
 						path.lineTo(vertices[0][0], vertices[0][1]);
 						path.close();
@@ -69,14 +69,14 @@ public class DrawView extends View {
 						canvas.drawPoint(x, y, g);
 
 					}
-					else if(entity instanceof Wall)
+					/*else if(entity instanceof Wall)
 					{
 						int x = entity.getXpos();
 						int y = entity.getYpos();
 						g.setColor(Color.BLACK);
 						g.setStyle(Paint.Style.FILL);
 						canvas.drawPoint(x, y, g);
-					}
+					}*/
 				}
 			}
 		}
