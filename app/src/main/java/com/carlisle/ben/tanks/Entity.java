@@ -1,6 +1,7 @@
 package com.carlisle.ben.tanks;
 
 public class Entity {
+
 	private int xpos;
 	private int ypos;
 
