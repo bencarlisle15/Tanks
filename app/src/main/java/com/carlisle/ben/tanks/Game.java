@@ -1,5 +1,7 @@
 package com.carlisle.ben.tanks;
 
+import java.util.ArrayList;
+
 public class Game extends Thread {
 
 	private Tank player1;
@@ -7,11 +9,13 @@ public class Game extends Thread {
 	private Map map;
 	private boolean firePlayer1 = false, firePlayer2 = false, movePlayer1 = false, movePlayer2 = false;
 	private float player1XPercentage, player1YPercentage, player2XPercentage, player2YPercentage;
+	private ArrayList<Bullet> bullets;
 
 	public Game(Map map) {
 		this.map = map;
 		Tank player1 = new Tank(0, map.getHeight()/2, map.getWidth()/15);
 		Tank player2 = new Tank(map.getWidth(), 0, map.getWidth()/15);
+		bullets = new ArrayList<>();
 		this.start();
 	}
 
@@ -20,11 +24,11 @@ public class Game extends Thread {
 		try {
 			while (true) {
 				if (firePlayer1) {
-					player1.fire();
+					bullets.add(player1.fire());
 					firePlayer1 = false;
 				}
 				if (firePlayer2) {
-					player2.fire();
+					bullets.add(player2.fire());
 					firePlayer2 = false;
 				}
 				if (movePlayer1) {
@@ -35,6 +39,7 @@ public class Game extends Thread {
 					player2.move(player2XPercentage, player2YPercentage);
 					movePlayer2 = false;
 				}
+				game
 				Thread.sleep(5);
 			}
 		} catch (InterruptedException e) {

@@ -13,15 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements GameView.GameListener {
+public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
 
 	private Game game;
+	private DrawView drawView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 	}
 
 	public void promptImage(View view) {
@@ -83,8 +83,9 @@ public class MainActivity extends AppCompatActivity implements GameView.GameList
 		}
 		if (imageBitmap != null) {
 			Map map = new Map(imageBitmap);
+			drawView  = findViewById(R.id.draw_view);
+			drawView.setBackground(new BitmapDrawable(getResources(), imageBitmap));
 			setContentView(R.layout.game_layout);
-			getWindow().getDecorView().setBackground(new BitmapDrawable(getResources(), imageBitmap));
 			game = new Game(map);
 		}
 	}

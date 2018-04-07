@@ -3,8 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.carlisle.ben.tanks.DrawView
+        android:id="@+id/draw_view"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
-    <com.carlisle.ben.tanks.GameView
+
+    <com.carlisle.ben.tanks.JoystickView
         android:id="@+id/joystickLeft"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -13,7 +18,7 @@
         android:layout_alignParentLeft="true"
         android:background="@android:color/transparent" />
 
-    <com.carlisle.ben.tanks.GameView
+    <com.carlisle.ben.tanks.JoystickView
         android:id="@+id/joystickRight"
         android:layout_width="100dp"
         android:layout_height="100dp"
