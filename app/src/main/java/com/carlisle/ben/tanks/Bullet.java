@@ -41,10 +41,10 @@ public class Bullet extends Entity {
         		nextYPos -= i*Math.sin(angle);
 			}
 			//find the slope from the first value that is not the wall
-			int slopeX1;
-        	int slopeY1;
-        	int slopeX2;
-        	int slopeY2;
+			int slopeX1 = 0;
+        	int slopeY1 = 0;
+        	int slopeX2 = 0;
+        	int slopeY2 = 0;
         	boolean isLeft1 = false, isLeft2 = false, isRight1 = false, isRight2 = false;
 			for (int i  = 0; i < 5; i++) {
         		if (!collisionDetected(theMap, nextXPos + i, nextYPos + 1)) {
@@ -84,10 +84,14 @@ public class Bullet extends Entity {
 					isLeft2 = true;
 				}
 			}
-			if (isRight1 && isLeft2) {
-				//TODO
-			} else if (isRight2 && isLeft1) {
-				//TODO
+			double slope1;
+			double newAngle;
+			if (isRight1 && isLeft2 && slopeY1 != 0 && slopeY1 != 0 && slopeX1 != 0 && slopeX2 != 0 || isRight2 && isLeft1 && slopeY1 != 0 && slopeY1 != 0 && slopeX1 != 0 && slopeX2 != 0) {
+				slope1 = (slopeY1 - slopeY2) / (slopeX1 - slopeX2);
+				newAngle = Math.atan(slope1);
+				angle = newAngle - Math.abs(angle - newAngle);
+				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
+				setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
 			} else {
 				angle *= -1;
 				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
