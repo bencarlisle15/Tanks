@@ -6,7 +6,6 @@ public class Bullet extends Entity {
 
     private double angle;
     private int numBounces;
-    boolean doesExist;
     private final int speed = 10;
 
     // xpos and ypos are of the tank
@@ -14,7 +13,6 @@ public class Bullet extends Entity {
         super(xpos, ypos);
         this.angle = angle;
         numBounces = 2;
-        doesExist = true;
     }
 
     //returns false if no collission true if wall collision
@@ -92,15 +90,21 @@ public class Bullet extends Entity {
 				angle = newAngle - Math.abs(angle - newAngle);
 				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
 				setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+				numBounces--;
 			} else {
 				angle *= -1;
 				theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
 				setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
+				numBounces--;
 			}
         }
     }
 
-    public void changeExist() {
-        doesExist = !doesExist;
+    public int getNumBounces() {
+    	return numBounces;
+	}
+
+    public void destroyBullet() {
+    	numBounces = -1;
     }
 }

@@ -1,13 +1,8 @@
 package com.carlisle.ben.tanks;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +11,6 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
 
 	private Game game;
-	private DrawView drawView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 			if (extras != null) {
 				imageBitmap = (Bitmap) extras.get("data");
 				if (imageBitmap != null) {
-					Map map = new Map(imageBitmap);
-					drawView  = findViewById(R.id.draw_view);
+					Map map = new Map(imageBitmap, Resources.getSystem().getDisplayMetrics().widthPixels, Resources.getSystem().getDisplayMetrics().heightPixels);
+					DrawView drawView = findViewById(R.id.draw_view);
 					drawView.setBackground(imageBitmap);
 					setContentView(R.layout.game_layout);
 					game = new Game(map, drawView);
