@@ -14,7 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
 {
     private float centerX;
     private float centerY;
@@ -31,7 +31,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         hatRadius = Math.min(getWidth(), getHeight()) / 5;
     }
 
-    public JoystickView(Context context)
+    public GameView(Context context)
     {
         super(context);
         getHolder().addCallback(this);
@@ -40,7 +40,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             joystickCallback = (JoystickListener) context;
     }
 
-    public JoystickView(Context context, AttributeSet attributes, int style)
+    public GameView(Context context, AttributeSet attributes, int style)
     {
         super(context, attributes, style);
         getHolder().addCallback(this);
@@ -49,7 +49,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             joystickCallback = (JoystickListener) context;
     }
 
-    public JoystickView (Context context, AttributeSet attributes)
+    public GameView(Context context, AttributeSet attributes)
     {
         super(context, attributes);
         getHolder().addCallback(this);
