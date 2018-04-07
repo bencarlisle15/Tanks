@@ -11,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 			if (cursor != null) {
 				cursor.moveToFirst();
 				String imagePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
-				imageBitmap = BitmapFactory.decodeFile(imagePath);
 				cursor.close();
+				imageBitmap = BitmapFactory.decodeFile(imagePath);
 			}
 		} else if (requestCode == 2) {
 				Bundle extras = data.getExtras();
