@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,6 +17,7 @@ public class DrawView extends View {
 	private Map map;
 	private Bitmap image;
 	private Rect rect;
+	private final Path path = new Path();
 	public DrawView(Context context)
 	{
 		super(context);
@@ -49,11 +51,16 @@ public class DrawView extends View {
 						Log.e(String.valueOf(vertices[0][0]), String.valueOf(vertices[0][1]));
 						Log.e(String.valueOf(vertices[1][0]), String.valueOf(vertices[1][1]));
 						Log.e(String.valueOf(vertices[2][0]), String.valueOf(vertices[2][1]));
-						g.setColor(Color.GREEN);
-						g.setStyle(Paint.Style.FILL);
-						canvas.drawLine(vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1], g);
-						canvas.drawLine(vertices[2][0], vertices[2][1], vertices[1][0], vertices[1][1], g);
-						canvas.drawLine(vertices[0][0], vertices[0][1], vertices[2][0], vertices[2][1], g);
+						g.setStrokeWidth(4);
+						g.setStyle(Paint.Style.FILL_AND_STROKE);
+						g.setAntiAlias(true);
+						path.setFillType(Path.FillType.EVEN_ODD);
+						path.moveTo(vertices[0][0], vertices[0][1]);
+						path.lineTo(vertices[1][0], vertices[1][1]);
+						path.lineTo(vertices[2][0], vertices[2][1]);
+						path.lineTo(vertices[0][0], vertices[0][1]);
+						path.close();
+						canvas.drawPath(path, g);;
 
 					}
 					else if(entity instanceof Bullet)
