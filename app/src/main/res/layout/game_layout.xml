@@ -32,21 +32,6 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/joystickRight"
-        android:layout_toLeftOf="@+id/joystickRight" />
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/joystickLeft"
-        android:layout_toRightOf="@+id/joystickLeft"/>
-       " />
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />

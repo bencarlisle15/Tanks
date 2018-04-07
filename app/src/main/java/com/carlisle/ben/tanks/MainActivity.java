@@ -10,16 +10,17 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
+public class MainActivity extends AppCompatActivity implements GameView.JoystickListener {
 
 	private Map map;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.game_layout);
 
 	}
 
