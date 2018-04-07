@@ -4,33 +4,36 @@ public class Bullet extends Entity {
 
     private double angle;
     private int numBounces;
+    boolean doesExist;
     private double speedX;
     private double speedY;
-    private boolean doesExist;
 
     // xpos and ypos are of the tank
     public Bullet(int xpos, int ypos, double angle) {
         super(xpos, ypos);
         this.angle = angle;
         numBounces = 2;
-        doesExist = true
+        doesExist = true;
         speedX = 10.0*(Math.cos(angle));
         speedY = 10.0*(Math.sin(angle));
     }
 
-    public boolean collisionDetected(int[] otherObj) {
+    public boolean collisionDetected(Map theMap) {
 
-        CollisionDetectorNoTank collisionDetector = new CollisionDetectorNoTank(getXpos(), getYpos(), otherObj[0], otherObj[1]);
+        CollisionDetectorNoTank collisionDetector = new CollisionDetectorNoTank(this,
+                                                                                theMap.getEntity(getXpos(), getYpos()));
 
-        return collisionDetector.isCollision();
+        return collisionDetector.isCollisionWithWall();
     }
 
-    public void updatePosition(Map ) {
+    public void updatePosition(Map theMap) {
 
-        if (collisionDetected()) {
-            doesExist = false;
+        if (!collisionDetected(theMap)) {
+            setPosition((int) (getXpos() + speedX), (int) (getYpos() + speedY));
         }
+    }
 
-
+    public void changeExist() {
+        doesExist = !doesExist;
     }
 }

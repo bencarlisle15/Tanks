@@ -2,27 +2,30 @@ package com.carlisle.ben.tanks;
 
 public class CollisionDetectorNoTank {
 
-    private int[] firstObj;
-    private int[] secondObj;
+    private Bullet bullet;
+    private Entity otherObj;
 
-    public CollisionDetectorNoTank (int firstXpos, int firstYpos, int secondXpos, int secondYpos) {
-
-        firstObj = new int[2];
-        secondObj = new int[2];
-
-        firstObj[0] = firstXpos;
-        firstObj[1] = firstYpos;
-
-        secondObj[0] = secondXpos;
-        secondObj[1] = secondYpos;
+    public CollisionDetectorNoTank(Bullet bullet, Entity otherObj) {
+        this.bullet = bullet;
+        this.otherObj = otherObj;
     }
 
-    public boolean isCollision() {
+    public boolean isCollisionWithWall() {
 
-        if (firstObj[0] == secondObj[0] || firstObj[1] == secondObj[1]) {
+        if (otherObj instanceof Wall) {
+
+            // ricochet
+
             return true;
         }
 
-        return false;
+        else if (otherObj instanceof Tank) {
+            bullet.changeExist();
+            return true;
+        }
+
+        else {
+            return false;
+        }
     }
 }
