@@ -13,7 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements GameView.JoystickListener {
+public class MainActivity extends AppCompatActivity implements GameView.GameListener {
 
 	private Game game;
 

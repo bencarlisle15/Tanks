@@ -1,14 +1,10 @@
 package com.carlisle.ben.tanks;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -20,7 +16,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     private float centerY;
     private float baseRadius;
     private float hatRadius;
-    private JoystickListener joystickCallback;
+    private GameListener GameCallback;
     private final int ratio = 3; //The smaller, the more shading will occur
 
     private void setupDimensions()
@@ -36,8 +32,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         super(context);
         getHolder().addCallback(this);
         setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
+        if(context instanceof GameListener)
+            GameCallback = (GameListener) context;
     }
 
     public GameView(Context context, AttributeSet attributes, int style)
@@ -45,8 +41,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         super(context, attributes, style);
         getHolder().addCallback(this);
         setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
+        if(context instanceof GameListener)
+            GameCallback = (GameListener) context;
     }
 
     public GameView(Context context, AttributeSet attributes)
@@ -54,11 +50,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         super(context, attributes);
         getHolder().addCallback(this);
         setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
+        if(context instanceof GameListener)
+            GameCallback = (GameListener) context;
     }
 
-    private void drawJoystick(float newX, float newY)
+    private void drawGame(float newX, float newY)
     {
         if(getHolder().getSurface().isValid())
         {
@@ -96,7 +92,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     public void surfaceCreated(SurfaceHolder holder)
     {
         setupDimensions();
-        drawJoystick(centerX, centerY);
+        drawGame(centerX, centerY);
     }
 
     @Override
@@ -118,27 +114,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
                 float displacement = (float) Math.sqrt((Math.pow(e.getX() - centerX, 2)) + Math.pow(e.getY() - centerY, 2));
                 if(displacement < baseRadius)
                 {
-                    drawJoystick(e.getX(), e.getY());
-                    joystickCallback.onJoystickMoved((e.getX() - centerX)/baseRadius, (e.getY() - centerY)/baseRadius, getId());
+                    drawGame(e.getX(), e.getY());
+                    GameCallback.onJoystickMoved((e.getX() - centerX)/baseRadius, (e.getY() - centerY)/baseRadius, getId());
                 }
                 else
                 {
                     float ratio = baseRadius / displacement;
                     float constrainedX = centerX + (e.getX() - centerX) * ratio;
                     float constrainedY = centerY + (e.getY() - centerY) * ratio;
-                    drawJoystick(constrainedX, constrainedY);
-                    joystickCallback.onJoystickMoved((constrainedX-centerX)/baseRadius, (constrainedY-centerY)/baseRadius, getId());
+                    drawGame(constrainedX, constrainedY);
+                    GameCallback.onJoystickMoved((constrainedX-centerX)/baseRadius, (constrainedY-centerY)/baseRadius, getId());
                 }
             }
             else
-                drawJoystick(centerX, centerY);
-            joystickCallback.onJoystickMoved(0,0,getId());
+                drawGame(centerX, centerY);
+            GameCallback.onJoystickMoved(0,0,getId());
         }
         return true;
     }
 
-    public interface JoystickListener
+    public interface GameListener
     {
         void onJoystickMoved(float xPercent, float yPercent, int id);
     }
+    
 }
