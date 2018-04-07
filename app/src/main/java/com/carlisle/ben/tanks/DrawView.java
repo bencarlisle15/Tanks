@@ -8,12 +8,15 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class DrawView extends View {
 
-	private Paint g = new Paint();
+	private final Paint g = new Paint();
+	private Rect rectangle;
 	public Map map;
+	private final Path path = new Path();
 	private Bitmap image;
 	public DrawView(Context context)
 	{
@@ -34,9 +37,9 @@ public class DrawView extends View {
 	}
 
 	public void onDraw(Canvas canvas) {
-
-		Rect rectangle = new Rect(0, 0, map.getWidth(), map.getHeight());
+        super.onDraw(canvas);
 		canvas.drawBitmap(image, null, rectangle, g);
+
 		for(Entity[] e : map.getEntities())
 		{
 			for(Entity entity : e)
@@ -47,16 +50,17 @@ public class DrawView extends View {
 					{
 						int[][] vertices = ((Tank) entity).getVertices(entity.getXpos(), entity.getYpos(), ((Tank) entity).getJoyAngle());
 						g.setColor(Color.GREEN);
-						g.setStyle(Paint.Style.FILL);
-						Path path = new Path();
+
+						g.setStrokeWidth(4);
+						g.setStyle(Paint.Style.FILL_AND_STROKE);
+						g.setAntiAlias(true);
+
+						path.setFillType(Path.FillType.EVEN_ODD);
 						path.moveTo(vertices[0][0], vertices[0][1]);
 						path.lineTo(vertices[1][0], vertices[1][1]);
-						path.moveTo(vertices[1][0], vertices[1][1]);
 						path.lineTo(vertices[2][0], vertices[2][1]);
-						path.moveTo(vertices[2][0], vertices[2][1]);
 						path.lineTo(vertices[0][0], vertices[0][1]);
 						path.close();
-
 						canvas.drawPath(path, g);
 
 					}
@@ -84,6 +88,7 @@ public class DrawView extends View {
 
 	public void setBackground(Bitmap image) {
 		this.image = image;
+		rectangle = new Rect(0, 0, map.getWidth(), map.getHeight());
 
 	}
 
