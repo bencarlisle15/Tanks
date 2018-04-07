@@ -70,7 +70,7 @@ public class Tank extends Entity {
         ArrayList<Entity> hittingEntities = new ArrayList<>();
         double angle = getJoyAngle();
 		int[] newVertex = new int[2];
-		for(int i = 0; i < 90; i+= 10) {
+		for(int i = 0; i < Math.PI/2; i+= Math.PI/6) {
             new_xPos = get_new_xPos(angle + i);
             new_yPos = get_new_yPos(angle + i);
             hittingEntities = getObjectsWithinRadius(new_xPos, new_yPos);
