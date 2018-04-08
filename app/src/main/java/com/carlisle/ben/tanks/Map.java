@@ -35,9 +35,6 @@ public class Map {
 	}
 
 	public Entity getEntity(int x, int y) {
-		if (x < 0 || y < 0 || x >= getWidth() || y >= getHeight()) {
-			return null;
-		}
 		return entities[x][y];
 	}
 
@@ -47,7 +44,9 @@ public class Map {
 
 	public void moveEntity(int x1, int y1, int x2, int y2) {
 		entities[x2][y2] = entities[x1][y1];
-		entities[x1][y1] = null;
+		if (x1 != x2 || y1 != y2) {
+			entities[x1][y1] = null;
+		}
 	}
 
 	private boolean isWall(int color) {

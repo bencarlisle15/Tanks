@@ -6,15 +6,21 @@ public class Bullet extends Entity {
     private int numBounces;
     private double xPercentage;
     private double yPercentage;
-    private final int speed = 10;
+    public final static int SPEED = 4;
+    private boolean isPlayer1;
 
     // xpos and ypos are of the tank
-    public Bullet(int xpos, int ypos, double xPercent, double yPercent) {
+    public Bullet(int xpos, int ypos, double xPercent, double yPercent, boolean isPlayer1) {
         super(xpos, ypos);
         this.xPercentage = xPercent;
         this.yPercentage = yPercent;
-        numBounces = 2;
+        numBounces = 0;
+        this.isPlayer1 = isPlayer1;
     }
+
+    public boolean isPlayer1() {
+    	return isPlayer1;
+	}
 
     //returns false if no collission true if wall collision
     public boolean collisionDetected(Map theMap, int nextXPos, int nextYPos) {
@@ -27,19 +33,21 @@ public class Bullet extends Entity {
     }
 
 	private int get_new_xPos(double xPercentage){
-		return (int) (getXpos() + speed*xPercentage/Math.sqrt(xPercentage*xPercentage + yPercentage* yPercentage) + 1/2 * (Math.pow(xPercentage,2)));
+		return (int) (getXpos() + SPEED*xPercentage/Math.sqrt(xPercentage*xPercentage + yPercentage* yPercentage));
 	}
 
 	private int get_new_yPos(double yPercentage){
-		return (int)(getYpos() + speed*yPercentage/Math.sqrt(xPercentage*xPercentage + yPercentage* yPercentage) + 1/2 * (Math.pow(yPercentage,2)));
+		return (int)(getYpos() + SPEED*yPercentage/Math.sqrt(xPercentage*xPercentage + yPercentage* yPercentage));
 	}
 
     public void updatePosition(Map map) {
 		int new_xPos = get_new_xPos(xPercentage);
 		int new_yPos = get_new_yPos(yPercentage);
-		if (new_xPos >= 0 && new_yPos >= 0 && new_xPos < map.getWidth() && new_yPos < map.getHeight() && map.getEntity(new_xPos, new_yPos) == null) {
+		if (new_xPos >= 0 && new_yPos >= 0 && new_xPos < map.getWidth() && new_yPos < map.getHeight() && !collisionDetected(map, new_xPos, new_yPos)) {
 			map.moveEntity(getXpos(), getYpos(), new_xPos, new_yPos);
 			setPosition(new_xPos, new_yPos);
+		} else {
+			numBounces--;
 		}
 //        if (!collisionDetected(theMap, nextXPos, nextYPos)) {
 //        	theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*xPercentage), (int) (getYpos() + speed*yPercentage));

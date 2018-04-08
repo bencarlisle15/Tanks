@@ -20,8 +20,8 @@ public class Game extends Thread {
 	}
 
 	public void run() {
-		player2 = new Tank(map.getWidth()/2, map.getWidth()/8, map.getWidth()/15);
-		player1 = new Tank(map.getWidth()/2 , map.getHeight() - 3*map.getWidth()/8, map.getWidth()/15);
+		player2 = new Tank(map.getWidth()/2, map.getWidth()/8, map.getWidth()/15, false);
+		player1 = new Tank(map.getWidth()/2 , map.getHeight() - 3*map.getWidth()/8, map.getWidth()/15, true);
 		map.setEntity(player1.getXpos(), player1.getYpos(), player1);
 		map.setEntity(player2.getXpos(), player2.getYpos(), player2);
 		bullets = new ArrayList<>();
@@ -29,13 +29,13 @@ public class Game extends Thread {
 		try {
 			while (true) {
 				if (firePlayer1) {
-					bullet = player2.fire();
+					bullet = player1.fire(map);
 					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
 					bullets.add(bullet);
 					firePlayer1 = false;
 				}
 				if (firePlayer2) {
-					bullet = player2.fire();
+					bullet = player2.fire(map);
 					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
 					bullets.add(bullet);
 					firePlayer2 = false;
@@ -43,11 +43,19 @@ public class Game extends Thread {
 				if (movePlayer1) {
 					player1.move(player1XPercentage, player1YPercentage, map);
 					movePlayer1 = false;
+				} else {
+					player1.move(0,0, map);
 				}
 				if (movePlayer2) {
 					player2.move(player2XPercentage, player2YPercentage, map);
 					movePlayer2 = false;
+				} else {
+					player2.move(0, 0, map);
 				}
+				if (player1.isDead()) {
+
+				}
+
 				for (int i = 0; i < bullets.size(); i++) {
 					bullet = bullets.get(i);
 					if (bullet.getNumBounces() < 0) {

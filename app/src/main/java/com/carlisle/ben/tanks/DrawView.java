@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -65,7 +64,7 @@ public class DrawView extends View {
 //						path.lineTo(vertices[0][0], vertices[0][1]);
 //						path.close();
 //						canvas.drawPath(path, g);
-						canvas.drawCircle(tank.getXpos(), tank.getYpos(),(float) tank.getWidth(), g);
+						canvas.drawCircle(tank.getXpos(), tank.getYpos(),(float) tank.getRadius(), g);
 						double h = Math.sqrt(tank.getXPercentage()*tank.getXPercentage() + tank.getXPercentage()*tank.getYPercentage());
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
 						g.setColor(Color.RED);
@@ -83,7 +82,6 @@ public class DrawView extends View {
 						g.setColor(Color.RED);
 						g.setStyle(Paint.Style.FILL);
 						canvas.drawCircle(x, y, 10, g);
-						Log.e("ISSA"," BULLET");
 					}
 //					else if(entity instanceof Wall)
 //					{
