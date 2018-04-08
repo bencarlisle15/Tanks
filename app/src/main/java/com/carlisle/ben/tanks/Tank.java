@@ -2,19 +2,14 @@ package com.carlisle.ben.tanks;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-
-public class Tank extends Entity {
+class Tank extends Entity implements Runnable {
 
 	private boolean canFire;
 	private int speed;
 	private int lives;
-	private static double timer = 0.1;
-	private int width;
-	private final static double BULLETCONST = 10;
-	private boolean isShootBottomPressed;
+	private final int width;
 	private double xPercentage, yPercentage;
-	private boolean isPlayer1;
+	private final boolean isPlayer1;
 	private boolean isDead = false;
 
 
@@ -22,25 +17,9 @@ public class Tank extends Entity {
 		super(xPos, yPos);
 		canFire = true;
 		lives = 3;
-		isShootBottomPressed = false;
+		boolean isShootBottomPressed = false;
 		this.width = width;
 		this.isPlayer1 = isPlayer1;
-	}
-
-	private boolean validAngle(int checkAngle) {
-
-		if(checkAngle < 0 || checkAngle > Math.PI){
-			return false;
-		}
-		return true;
-	}
-
-	public void setXPercentage(double xPercentage){
-		this.xPercentage = xPercentage;
-	}
-
-	public void setYPercentage(double yPercentage){
-		this.yPercentage = yPercentage;
 	}
 
 	private int get_new_xPos(double xPercentage){
@@ -52,62 +31,29 @@ public class Tank extends Entity {
 	}
 
 	public Bullet fire(Map map){
-		int xpos = (int)(getXpos() + Bullet.SPEED*xPercentage/Math.sqrt(xPercentage*xPercentage + yPercentage* yPercentage));
-		int ypos = (int)(getYpos() + Bullet.SPEED*yPercentage/Math.sqrt(xPercentage*xPercentage + yPercentage* yPercentage));
-		if (xpos < 0 || ypos < 0 || xpos >= map.getWidth() || ypos >= map.getHeight()) {
-			return null;
-		}else {
-			return new Bullet(xpos, ypos, xPercentage, yPercentage, isPlayer1);
+		if (canFire) {
+			int xpos = (int) (getXpos() + Bullet.SPEED * xPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
+			int ypos = (int) (getYpos() + Bullet.SPEED * yPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
+			if (xpos < 0 || ypos < 0 || xpos >= map.getWidth() || ypos >= map.getHeight()) {
+				return null;
+			} else {
+				canFire = false;
+				new Thread(this).start();
+				return new Bullet(xpos, ypos, xPercentage, yPercentage, isPlayer1);
+			}
 		}
+		return null;
 	}
 
 	public void move(float xPercentage, float yPercentage, Map map){
-		xPercentage = Math.min(1, Math.max(xPercentage, -1));
-		yPercentage = Math.min(1, Math.max(yPercentage, -1));
 		this.xPercentage = xPercentage;
 		this.yPercentage = yPercentage;
-		speed = (int) (Math.sqrt(xPercentage*xPercentage + yPercentage*yPercentage)*10);
-		int new_xPos = get_new_xPos(xPercentage);
-		int new_yPos = get_new_yPos(yPercentage);
+		this.xPercentage = Math.min(1, Math.max(this.xPercentage, -1));
+		this.yPercentage = Math.min(1, Math.max(this.yPercentage, -1));
+		speed = (int) (Math.sqrt(this.xPercentage*this.xPercentage + this.yPercentage*this.yPercentage)*10);
+		int new_xPos = get_new_xPos(this.xPercentage);
+		int new_yPos = get_new_yPos(this.yPercentage);
 		checkCollision(new_xPos, new_yPos, map);
-
-
-//		if (true) {
-//			return;
-//		}
-//        ArrayList<Entity> hittingEntities = new ArrayList<>();
-//		int[] newVertex = new int[2];
-//		double angle = 9;
-//		for(int i = 0; i < Math.PI/2; i+= Math.PI/6) {
-//            new_xPos = get_new_xPos(angle + i);
-//            new_yPos = get_new_yPos(angle + i);
-//            hittingEntities = getObjectsWithinRadius(new_xPos, new_yPos);
-//            for (Entity entity: hittingEntities) {
-//                if (entity != null) {
-//					newVertex[0] = entity.getXpos();
-//					newVertex[1] = entity.getYpos();
-//                    if (!(new CollisionDetectorWithTank(getVertices(new_xPos, new_yPos, getJoyAngle() + i), newVertex).isCollision())) {
-//                    	angle = angle + i;
-//						map.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
-//						setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
-//					}
-//                }
-//            }
-//			new_xPos = get_new_xPos(angle - i);
-//			new_yPos = get_new_yPos(angle - i);
-//			hittingEntities = getObjectsWithinRadius(new_xPos, new_yPos);
-//			for (Entity entity: hittingEntities) {
-//				if (entity != null) {
-//					newVertex[0] = entity.getXpos();
-//					newVertex[1] = entity.getYpos();
-//					if (!(new CollisionDetectorWithTank(getVertices(new_xPos, new_yPos, getJoyAngle() - i), newVertex).isCollision())) {
-//						angle = angle - i;
-//						map.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*Math.cos(angle)), (int) (getYpos() + speed*Math.sin(angle)));
-//						setPosition((int)(getXpos() + speed*Math.cos(angle)), (int)(getYpos() + speed*Math.sin(angle)));
-//					}
-//				}
-//			}
-//        }
 	}
 
 	private void checkCollision(int nextXPos, int nextYPos, Map map) {
@@ -167,7 +113,7 @@ public class Tank extends Entity {
 		return lives;
 	}
 
-	public void destoryTank(Map map) {
+	private void destoryTank(Map map) {
 		map.setEntity(getXpos(), getYpos(), null);
 		Log.e("AM", "ded");
 		isDead = true;
@@ -175,11 +121,6 @@ public class Tank extends Entity {
 
 	public boolean isDead() {
 		return isDead;
-	}
-
-	private ArrayList<Entity> getObjectsWithinRadius(int new_xPos, int new_yPos) {
-		//TODO check all objects within a 1.3*width radius of the new pos of the tank
-		return new ArrayList<>();
 	}
 
 	public double getRadius() {
@@ -194,11 +135,13 @@ public class Tank extends Entity {
 		return yPercentage;
 	}
 
-	public int [][]  getVertices(int newXPos, int newYPos){
+	@Override
+	public void run() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException ignored) {
+		}
+		canFire = true;
 
-		int [][] vertices = {{(int) (newXPos + width),(int) newYPos},
-				{ (int) (newXPos + 0.3 * width), (int) (newYPos - 0.5 * width)},
-				{(int) (newXPos - 0.3 * width), (int) (newYPos + 0.5 * width)}};
-		return vertices;
 	}
 }

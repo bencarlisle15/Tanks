@@ -4,16 +4,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Game extends Thread {
+class Game extends Thread {
 
-	private Tank player1;
-	private Tank player2;
-	private Map map;
-	private DrawView drawView;
+	private final Map map;
+	private final DrawView drawView;
 	private boolean firePlayer1 = false, firePlayer2 = false, movePlayer1 = false, movePlayer2 = false;
 	private float player1XPercentage, player1YPercentage, player2XPercentage, player2YPercentage;
-	private ArrayList<Bullet> bullets;
-	private MainActivity main;
+	private final MainActivity main;
 
 	public Game(Map map, DrawView drawView, MainActivity main) {
 		this.map = map;
@@ -23,24 +20,28 @@ public class Game extends Thread {
 
 	public void run() {
 		Log.e("game", "init");
-		player2 = new Tank(map.getWidth()/2, map.getWidth()/8, map.getWidth()/15, false);
-		player1 = new Tank(map.getWidth()/2 , map.getHeight() - 3*map.getWidth()/8, map.getWidth()/15, true);
+		Tank player2 = new Tank(map.getWidth() / 2, map.getWidth() / 8, map.getWidth() / 15, false);
+		Tank player1 = new Tank(map.getWidth() / 2, map.getHeight() - 3 * map.getWidth() / 8, map.getWidth() / 15, true);
 		map.setEntity(player1.getXpos(), player1.getYpos(), player1);
 		map.setEntity(player2.getXpos(), player2.getYpos(), player2);
-		bullets = new ArrayList<>();
+		ArrayList<Bullet> bullets = new ArrayList<>();
 		Bullet bullet;
 		try {
 			while (true) {
 				if (firePlayer1) {
 					bullet = player1.fire(map);
-					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
-					bullets.add(bullet);
+					if (bullet != null) {
+						map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
+						bullets.add(bullet);
+					}
 					firePlayer1 = false;
 				}
 				if (firePlayer2) {
 					bullet = player2.fire(map);
-					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
-					bullets.add(bullet);
+					if (bullet != null) {
+						map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
+						bullets.add(bullet);
+					}
 					firePlayer2 = false;
 				}
 				if (movePlayer1) {
@@ -50,7 +51,7 @@ public class Game extends Thread {
 				if (movePlayer2) {
 					player2.move(player2XPercentage, player2YPercentage, map);
 					movePlayer2 = false;
-				} 
+				}
 
 				if (player1.isDead()) {
 					main.runOnUiThread(main);
@@ -73,8 +74,7 @@ public class Game extends Thread {
 				drawView.updateMap(map);
 				Thread.sleep(5);
 			}
-		} catch (InterruptedException e) {
-			return;
+		} catch (InterruptedException ignored) {
 		}
 	}
 

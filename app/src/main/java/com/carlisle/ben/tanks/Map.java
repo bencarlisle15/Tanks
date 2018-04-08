@@ -1,11 +1,9 @@
 package com.carlisle.ben.tanks;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.util.Log;
 
-public class Map {
-	private Entity[][] entities;
+class Map {
+	private final Entity[][] entities;
 
 	public Map(Bitmap image, int gameWidth, int gameHeight) {
 		entities = new Entity[gameWidth][gameHeight];

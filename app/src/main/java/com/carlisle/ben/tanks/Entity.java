@@ -5,7 +5,7 @@ public class Entity {
 	private int xpos;
 	private int ypos;
 
-	public Entity(int xpos, int ypos) {
+	Entity(int xpos, int ypos) {
 		this.xpos = xpos;
 		this.ypos = ypos;
 	}
@@ -18,7 +18,7 @@ public class Entity {
 		return ypos;
 	}
 
-	public void setPosition(int xpos, int ypos) {
+	void setPosition(int xpos, int ypos) {
 		this.xpos = xpos;
 		this.ypos = ypos;
 	}

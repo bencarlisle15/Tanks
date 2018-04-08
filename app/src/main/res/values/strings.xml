@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Tanks</string>
-    <string name="upload_map">Upload Map!</string>
+    <string name="upload_map">Upload Your Battleground!</string>
     <string name="fire">FIRE!</string>
     <string name="over">GAME OVER! Player 2 Wins</string>
     <string name="restart">Restart</string>

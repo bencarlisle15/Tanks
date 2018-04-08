@@ -1,5 +1,6 @@
 package com.carlisle.ben.tanks;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class DrawView extends View {
@@ -35,6 +35,7 @@ public class DrawView extends View {
 		postInvalidate();
 	}
 
+	@SuppressLint("DrawAllocation")
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		g.setAntiAlias(false);
@@ -49,27 +50,19 @@ public class DrawView extends View {
 					if(entity instanceof Tank)
 					{
 						Tank tank = (Tank) entity;
-//						int[][] vertices = ((Tank) entity).getVertices(entity.getXpos(), entity.getYpos());
-//						Log.e(String.valueOf(vertices[0][0]), String.valueOf(vertices[0][1]));
-//						Log.e(String.valueOf(vertices[1][0]), String.valueOf(vertices[1][1]));
-//						Log.e(String.valueOf(vertices[2][0]), String.valueOf(vertices[2][1]));
 						g.setStrokeWidth(4);
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
-						if (tank.getLives() == 3) {
-							g.setColor(Color.GREEN);
-						} else if (tank.getLives() == 2) {
-							g.setColor(Color.BLUE);
-						} else if (tank.getLives() == 1) {
-							g.setColor(Color.MAGENTA);
+						switch (tank.getLives()) {
+							case 3:
+								g.setColor(Color.GREEN);
+								break;
+							case 2:
+								g.setColor(Color.BLUE);
+								break;
+							case 1:
+								g.setColor(Color.MAGENTA);
+								break;
 						}
-//						path.reset();
-//						path.setFillType(Path.FillType.EVEN_ODD);
-//						path.moveTo(vertices[0][0], vertices[0][1]);
-//						path.lineTo(vertices[1][0], vertices[1][1]);
-//						path.lineTo(vertices[2][0], vertices[2][1]);
-//						path.lineTo(vertices[0][0], vertices[0][1]);
-//						path.close();
-//						canvas.drawPath(path, g);
 						canvas.drawCircle(tank.getXpos(), tank.getYpos(),(float) tank.getRadius(), g);
 						double h = Math.sqrt(tank.getXPercentage()*tank.getXPercentage() + tank.getXPercentage()*tank.getYPercentage());
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -88,15 +81,9 @@ public class DrawView extends View {
 						g.setColor(Color.RED);
 						g.setStyle(Paint.Style.FILL);
 						canvas.drawCircle(x, y, 10, g);
+//					} else if (entity instanceof Wall) {
+//						canvas.drawPoint(entity.getXpos(), entity.getYpos(), g);
 					}
-//					else if(entity instanceof Wall)
-//					{
-//						int x = entity.getXpos();
-//						int y = entity.getYpos();
-//						g.setColor(Color.BLACK);
-//						g.setStyle(Paint.Style.FILL);
-//						canvas.drawPoint(x, y, g);
-//					}
 				}
 			}
 		}

@@ -17,9 +17,8 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private float baseRadius;
     private float hatRadius;
     private JoystickListener gameCallback;
-    private final int ratio = 3; //The smaller, the more shading will occur
 
-    private void setupDimensions()
+	private void setupDimensions()
     {
         centerX = getWidth() / 2;
         centerY = getHeight() / 2;
@@ -70,11 +69,12 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             //Draw the base first before shading
             colors.setARGB(255, 100, 100, 100);
             myCanvas.drawCircle(centerX, centerY, baseRadius, colors);
-            for(int i = 1; i <= (int) (baseRadius / ratio); i++)
+			int ratio = 3;
+			for(int i = 1; i <= (int) (baseRadius / ratio); i++)
             {
                 colors.setARGB(150/i, 255, 0, 0); //Gradually decrease the shade of black drawn to create a nice shading effect
-                myCanvas.drawCircle(newX - cos * hypotenuse * (ratio/baseRadius) * i,
-                        newY - sin * hypotenuse * (ratio/baseRadius) * i, i * (hatRadius * ratio / baseRadius), colors); //Gradually increase the size of the shading effect
+                myCanvas.drawCircle(newX - cos * hypotenuse * (ratio /baseRadius) * i,
+                        newY - sin * hypotenuse * (ratio /baseRadius) * i, i * (hatRadius * ratio / baseRadius), colors); //Gradually increase the size of the shading effect
             }
 
             //Drawing the joystick hat
@@ -109,7 +109,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     {
         if(v.equals(this))
         {
-            if(e.getAction() != e.ACTION_UP)
+            if(e.getAction() != MotionEvent.ACTION_UP)
             {
                 float displacement = (float) Math.sqrt((Math.pow(e.getX() - centerX, 2)) + Math.pow(e.getY() - centerY, 2));
                 if(displacement < baseRadius)
