@@ -55,7 +55,7 @@ public class DrawView extends View {
 //						Log.e(String.valueOf(vertices[1][0]), String.valueOf(vertices[1][1]));
 //						Log.e(String.valueOf(vertices[2][0]), String.valueOf(vertices[2][1]));
 						g.setStrokeWidth(4);
-						g.setStyle(Paint.Style.STROKE);
+						g.setStyle(Paint.Style.FILL_AND_STROKE);
 						g.setColor(Color.GREEN);
 //						path.reset();
 //						path.setFillType(Path.FillType.EVEN_ODD);
@@ -67,10 +67,12 @@ public class DrawView extends View {
 //						canvas.drawPath(path, g);
 						canvas.drawCircle(tank.getXpos(), tank.getYpos(),(float) tank.getWidth(), g);
 						double h = Math.sqrt(tank.getXPercentage()*tank.getXPercentage() + tank.getXPercentage()*tank.getYPercentage());
+						g.setStyle(Paint.Style.FILL_AND_STROKE);
+						g.setColor(Color.RED);
 						if (h == 0) {
-							canvas.drawCircle(tank.getXpos(), tank.getYpos(), 5, g);
+							canvas.drawCircle(tank.getXpos(), tank.getYpos(), 10, g);
 						} else {
-							canvas.drawCircle((int)(tank.getXpos() + 4*tank.getXPercentage()/h), (int)(tank.getYpos() + 4*tank.getYPercentage()/h), 5, g);
+							canvas.drawCircle((int)(tank.getXpos() + 5*tank.getXPercentage()/h), (int)(tank.getYpos() + 5*tank.getYPercentage()/h), 10, g);
 						}
 
 					}

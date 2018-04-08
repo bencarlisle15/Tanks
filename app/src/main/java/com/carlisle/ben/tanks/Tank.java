@@ -54,7 +54,9 @@ public class Tank extends Entity {
     }
 
     public void move(float xPercentage, float yPercentage, Map map){
-        this.xPercentage = xPercentage;
+    	xPercentage = Math.min(1, Math.max(xPercentage, -1));
+		yPercentage = Math.min(1, Math.max(yPercentage, -1));
+		this.xPercentage = xPercentage;
         this.yPercentage = yPercentage;
         speed = (int) (Math.sqrt(xPercentage*xPercentage + yPercentage*yPercentage)*10);
         int new_xPos = get_new_xPos(xPercentage);
