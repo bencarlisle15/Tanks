@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener {
+public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable {
 
 	private Game game;
+	private boolean player1Wins;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 					DrawView drawView = findViewById(R.id.draw_view);
 					drawView.setBackground(imageBitmap);
 					Map map = new Map(imageBitmap, drawView.getRootView().getWidth(), (int)(15.5*drawView.getRootView().getHeight()/17));
-					game = new Game(map, drawView);
+					game = new Game(map, drawView, this);
 					game.start();
 				}
 			}
@@ -64,4 +66,19 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
     public void firePlayer2(View v) {
 	    game.firePlayer2();
     }
+
+    public void player1Wins() {
+		player1Wins = true;
+	}
+
+	@Override
+	public void run() {
+
+		setContentView(R.layout.end_screen);
+		if (player1Wins) {
+			TextView winner = findViewById(R.id.winner);
+			String text = "GAME OVER! Player 1 Wins!";
+			winner.setText(text);
+		}
+	}
 }

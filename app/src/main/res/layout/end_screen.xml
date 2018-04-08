@@ -7,10 +7,19 @@
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="GAME OVER! Player 1 Wins"
+        android:text="GAME OVER! Player 2 Wins"
         android:textAlignment="center"
         android:id="@+id/winner"
         android:textColor="@android:color/black"
         android:textSize="48sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Restart"
+        android:layout_below="@id/winner"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="promptImage"/>
 
 </RelativeLayout>

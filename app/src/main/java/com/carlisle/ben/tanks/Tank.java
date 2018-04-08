@@ -146,12 +146,12 @@ public class Tank extends Entity {
 			return 1;
 		} else if (map.getEntity(newX, newY) == null) {
 			return 0;
-		} else if ((map.getEntity(newX, newY)) instanceof Bullet) {
+		} else if ((map.getEntity(newX, newY)) instanceof Bullet && newX != 0 && newY != 0) {
 			if (((Bullet) map.getEntity(newX, newY)).isPlayer1() != isPlayer1) {
 				destoryTank(map);
+				Log.e(String.valueOf(newX), String.valueOf(newY));
+				Log.e(String.valueOf(getXpos()), String.valueOf(getYpos()));
 				return 1;
-			} else {
-				Log.e("FRIENDLY", String.valueOf(isPlayer1));
 			}
 		} else if (map.getEntity(newX, newY) == this) {
 			return 0;

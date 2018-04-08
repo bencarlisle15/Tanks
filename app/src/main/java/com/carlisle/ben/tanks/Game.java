@@ -13,13 +13,16 @@ public class Game extends Thread {
 	private boolean firePlayer1 = false, firePlayer2 = false, movePlayer1 = false, movePlayer2 = false;
 	private float player1XPercentage, player1YPercentage, player2XPercentage, player2YPercentage;
 	private ArrayList<Bullet> bullets;
+	private MainActivity main;
 
-	public Game(Map map, DrawView drawView) {
+	public Game(Map map, DrawView drawView, MainActivity main) {
 		this.map = map;
 		this.drawView = drawView;
+		this.main = main;
 	}
 
 	public void run() {
+		Log.e("game", "init");
 		player2 = new Tank(map.getWidth()/2, map.getWidth()/8, map.getWidth()/15, false);
 		player1 = new Tank(map.getWidth()/2 , map.getHeight() - 3*map.getWidth()/8, map.getWidth()/15, true);
 		map.setEntity(player1.getXpos(), player1.getYpos(), player1);
@@ -51,7 +54,12 @@ public class Game extends Thread {
 				}
 
 				if (player1.isDead()) {
-
+					main.runOnUiThread(main);
+					break;
+				} else if (player2.isDead()) {
+					main.player1Wins();
+					main.runOnUiThread(main);
+					break;
 				}
 
 				for (int i = 0; i < bullets.size(); i++) {
