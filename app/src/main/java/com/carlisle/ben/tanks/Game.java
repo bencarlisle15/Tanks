@@ -25,14 +25,19 @@ public class Game extends Thread {
 		map.setEntity(player1.getXpos(), player1.getYpos(), player1);
 		map.setEntity(player2.getXpos(), player2.getYpos(), player2);
 		bullets = new ArrayList<>();
+		Bullet bullet;
 		try {
 			while (true) {
 				if (firePlayer1) {
-					bullets.add(player1.fire());
+					bullet = player2.fire();
+					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
+					bullets.add(bullet);
 					firePlayer1 = false;
 				}
 				if (firePlayer2) {
-					bullets.add(player2.fire());
+					bullet = player2.fire();
+					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
+					bullets.add(bullet);
 					firePlayer2 = false;
 				}
 				if (movePlayer1) {
@@ -43,7 +48,8 @@ public class Game extends Thread {
 					player2.move(player2XPercentage, player2YPercentage, map);
 					movePlayer2 = false;
 				}
-				for (Bullet bullet: bullets) {
+				for (int i = 0; i < bullets.size(); i++) {
+					bullet = bullets.get(i);
 					if (bullet.getNumBounces() < 0) {
 						bullets.remove(bullet);
 						map.setEntity(bullet.getXpos(), bullet.getYpos(), null);
