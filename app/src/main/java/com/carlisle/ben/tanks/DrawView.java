@@ -85,14 +85,14 @@ public class DrawView extends View {
 						canvas.drawPoint(x, y, g);
 
 					}
-					/*else if(entity instanceof Wall)
+					else if(entity instanceof Wall)
 					{
 						int x = entity.getXpos();
 						int y = entity.getYpos();
 						g.setColor(Color.BLACK);
 						g.setStyle(Paint.Style.FILL);
 						canvas.drawPoint(x, y, g);
-					}*/
+					}
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 package com.carlisle.ben.tanks;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Log;
 
 public class Map {
@@ -16,6 +17,7 @@ public class Map {
 				} else {
 					entities[r][c] = null;
 				}
+
 			}
 		}
 	}
@@ -49,10 +51,9 @@ public class Map {
 	}
 
 	private boolean isWall(int color) {
-		int a = (color >> 24) & 0xff;
 		int r = (color >> 16) & 0xff;
 		int g = (color >>  8) & 0xff;
 		int b = (color) & 0xff;
-		return a > 120 && r > 100 && r < 150 && g > 100 && g < 150 && b > 100 && b < 150;
+		return (r+g+b)/3 < 100;
 	}
 }
