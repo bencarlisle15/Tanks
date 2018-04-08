@@ -52,12 +52,12 @@ class Game extends Thread {
 					player2.move(player2XPercentage, player2YPercentage, map);
 					movePlayer2 = false;
 				}
-
 				if (player1.isDead()) {
+					main.player1Wins(false);
 					main.runOnUiThread(main);
 					break;
 				} else if (player2.isDead()) {
-					main.player1Wins();
+					main.player1Wins(true);
 					main.runOnUiThread(main);
 					break;
 				}

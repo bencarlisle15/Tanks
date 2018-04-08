@@ -22,7 +22,7 @@ public class Bullet extends Entity {
 
 	//returns false if no collission true if wall collision
 	private boolean collisionDetected(Map theMap, int nextXPos, int nextYPos) {
-		return theMap.getEntity(nextXPos, nextYPos) == null && (theMap.getEntity(nextXPos, nextYPos)) instanceof Wall;
+		return theMap.getEntity(nextXPos, nextYPos) != null && theMap.getEntity(nextXPos, nextYPos) instanceof Wall;
 	}
 
 	public boolean isAlive() {

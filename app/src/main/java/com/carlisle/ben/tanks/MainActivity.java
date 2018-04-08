@@ -6,6 +6,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable {
@@ -15,7 +17,8 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);requestWindowFeature(Window.FEATURE_NO_TITLE);
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
 	}
 
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 					setContentView(R.layout.game_layout);
 					DrawView drawView = findViewById(R.id.draw_view);
 					drawView.setBackground(imageBitmap);
-					Map map = new Map(imageBitmap, drawView.getRootView().getWidth(), (int)(15.5*drawView.getRootView().getHeight()/17));
+					Map map = new Map(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight());
 					game = new Game(map, drawView, this);
 					game.start();
 				}
@@ -65,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 	    game.firePlayer2();
     }
 
-    public void player1Wins() {
-		player1Wins = true;
+    public void player1Wins(boolean player1Wins) {
+		this.player1Wins = player1Wins;
 	}
 
 	@Override
