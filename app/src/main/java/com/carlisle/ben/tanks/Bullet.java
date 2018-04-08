@@ -3,7 +3,7 @@ package com.carlisle.ben.tanks;
 public class Bullet extends Entity {
 
     private double angle;
-    private int numBounces;
+    private boolean alive = true;
     private double xPercentage;
     private double yPercentage;
     public final static int SPEED = 4;
@@ -14,7 +14,6 @@ public class Bullet extends Entity {
         super(xpos, ypos);
         this.xPercentage = xPercent;
         this.yPercentage = yPercent;
-        numBounces = 0;
         this.isPlayer1 = isPlayer1;
     }
 
@@ -32,6 +31,14 @@ public class Bullet extends Entity {
 		return false;
     }
 
+    public boolean isAlive() {
+    	return alive;
+	}
+
+	public void killBullet() {
+    	alive = false;
+	}
+
 	private int get_new_xPos(double xPercentage){
 		return (int) (getXpos() + SPEED*xPercentage/Math.sqrt(xPercentage*xPercentage + yPercentage* yPercentage));
 	}
@@ -47,7 +54,7 @@ public class Bullet extends Entity {
 			map.moveEntity(getXpos(), getYpos(), new_xPos, new_yPos);
 			setPosition(new_xPos, new_yPos);
 		} else {
-			numBounces--;
+			alive = false;
 		}
 //        if (!collisionDetected(theMap, nextXPos, nextYPos)) {
 //        	theMap.moveEntity(getXpos(), getYpos(), (int)(getXpos() + speed*xPercentage), (int) (getYpos() + speed*yPercentage));
@@ -119,13 +126,5 @@ public class Bullet extends Entity {
 //				numBounces--;
 //			}
 //        }
-    }
-
-    public int getNumBounces() {
-    	return numBounces;
-	}
-
-    public void destroyBullet() {
-    	numBounces = -1;
     }
 }

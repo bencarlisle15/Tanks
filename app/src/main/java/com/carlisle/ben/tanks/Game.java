@@ -47,11 +47,10 @@ public class Game extends Thread {
 					player1.move(player1XPercentage, player1YPercentage, map);
 					movePlayer1 = false;
 				}
-
 				if (movePlayer2) {
 					player2.move(player2XPercentage, player2YPercentage, map);
 					movePlayer2 = false;
-				}
+				} 
 
 				if (player1.isDead()) {
 					main.runOnUiThread(main);
@@ -64,7 +63,7 @@ public class Game extends Thread {
 
 				for (int i = 0; i < bullets.size(); i++) {
 					bullet = bullets.get(i);
-					if (bullet.getNumBounces() < 0) {
+					if (!bullet.isAlive()) {
 						bullets.remove(bullet);
 						map.setEntity(bullet.getXpos(), bullet.getYpos(), null);
 					} else {

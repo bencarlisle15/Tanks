@@ -55,7 +55,13 @@ public class DrawView extends View {
 //						Log.e(String.valueOf(vertices[2][0]), String.valueOf(vertices[2][1]));
 						g.setStrokeWidth(4);
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
-						g.setColor(Color.GREEN);
+						if (tank.getLives() == 3) {
+							g.setColor(Color.GREEN);
+						} else if (tank.getLives() == 2) {
+							g.setColor(Color.BLUE);
+						} else if (tank.getLives() == 1) {
+							g.setColor(Color.MAGENTA);
+						}
 //						path.reset();
 //						path.setFillType(Path.FillType.EVEN_ODD);
 //						path.moveTo(vertices[0][0], vertices[0][1]);
