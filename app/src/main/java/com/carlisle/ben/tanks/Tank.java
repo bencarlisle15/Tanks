@@ -109,6 +109,17 @@ public class Tank extends Entity {
 		return new ArrayList<>();
 	}
 
+	public double getWidth() {
+    	return width;
+	}
+
+	public double getXPercentage() {
+    	return xPercentage;
+	}
+
+	public double getYPercentage() {
+		return yPercentage;
+	}
 
 	public int [][]  getVertices(int newXPos, int newYPos){
 
