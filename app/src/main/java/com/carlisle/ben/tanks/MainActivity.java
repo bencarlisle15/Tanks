@@ -1,12 +1,10 @@
 package com.carlisle.ben.tanks;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Bitmap imageBitmap = null;
+		Bitmap imageBitmap;
 		if (requestCode == 0) {
 			Bundle extras = data.getExtras();
 			if (extras != null) {
