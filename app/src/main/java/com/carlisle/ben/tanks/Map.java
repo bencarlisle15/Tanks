@@ -20,6 +20,16 @@ class Map {
 		}
 	}
 
+	public void clear() {
+		for (int r = 0; r < entities.length; r++) {
+			for (int c = 0; c < entities[r].length; c++) {
+				if (!(entities[r][c] instanceof Wall)) {
+					entities[r][c] = null;
+				}
+			}
+		}
+	}
+
 	public int getWidth() {
 		return entities.length;
 	}
@@ -49,8 +59,8 @@ class Map {
 
 	private boolean isWall(int color) {
 		int r = (color >> 16) & 0xff;
-		int g = (color >>  8) & 0xff;
+		int g = (color >> 8) & 0xff;
 		int b = (color) & 0xff;
-		return (r+g+b)/3 < 100;
+		return (r + g + b) / 3 < 100;
 	}
 }

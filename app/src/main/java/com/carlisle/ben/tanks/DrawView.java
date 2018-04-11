@@ -17,8 +17,8 @@ public class DrawView extends View {
 	private Map map;
 	private Bitmap image;
 	private final Path path = new Path();
-	public DrawView(Context context)
-	{
+
+	public DrawView(Context context) {
 		super(context);
 	}
 
@@ -39,16 +39,11 @@ public class DrawView extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		g.setAntiAlias(false);
-
 		canvas.drawBitmap(image, null, new Rect(0, 0, getWidth(), getHeight()), g);
-		for(Entity[] e : map.getEntities())
-		{
-			for(Entity entity : e)
-			{
-				if(entity != null)
-				{
-					if(entity instanceof Tank)
-					{
+		for (Entity[] e : map.getEntities()) {
+			for (Entity entity : e) {
+				if (entity != null) {
+					if (entity instanceof Tank) {
 						Tank tank = (Tank) entity;
 						g.setStrokeWidth(4);
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -63,19 +58,17 @@ public class DrawView extends View {
 								g.setColor(Color.MAGENTA);
 								break;
 						}
-						canvas.drawCircle(tank.getXpos(), tank.getYpos(),(float) tank.getRadius(), g);
-						double h = Math.sqrt(tank.getXPercentage()*tank.getXPercentage() + tank.getXPercentage()*tank.getYPercentage());
+						canvas.drawCircle(tank.getXpos(), tank.getYpos(), (float) tank.getRadius(), g);
+						double h = Math.sqrt(tank.getXPercentage() * tank.getXPercentage() + tank.getYPercentage() * tank.getYPercentage());
 						g.setStyle(Paint.Style.FILL_AND_STROKE);
-						g.setColor(Color.RED);
+						g.setColor(Color.BLACK);
 						if (h == 0) {
 							canvas.drawCircle(tank.getXpos(), tank.getYpos(), 10, g);
 						} else {
-							canvas.drawCircle((int)(tank.getXpos() + 5*tank.getXPercentage()/h), (int)(tank.getYpos() + 5*tank.getYPercentage()/h), 10, g);
+							canvas.drawCircle((int) (tank.getXpos() + tank.getRadius() * tank.getXPercentage() / (2 * h)), (int) (tank.getYpos() + tank.getRadius() * tank.getYPercentage() / (2 * h)), 10, g);
 						}
 
-					}
-					else if(entity instanceof Bullet)
-					{
+					} else if (entity instanceof Bullet) {
 						int x = entity.getXpos();
 						int y = entity.getYpos();
 						g.setColor(Color.RED);

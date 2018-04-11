@@ -2,24 +2,30 @@ package com.carlisle.ben.tanks;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable {
 
 	private Game game;
 	private boolean player1Wins;
+	private Map map;
+	private Bitmap imageBitmap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);requestWindowFeature(Window.FEATURE_NO_TITLE);
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
+		Objects.requireNonNull(getSupportActionBar()).hide();
 	}
 
 	public void promptImage(View view) {
@@ -42,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Bitmap imageBitmap;
 		if (requestCode == 0) {
 			Bundle extras = data.getExtras();
 			if (extras != null) {
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 					setContentView(R.layout.game_layout);
 					DrawView drawView = findViewById(R.id.draw_view);
 					drawView.setBackground(imageBitmap);
-					Map map = new Map(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight());
+					map = new Map(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight());
 					game = new Game(map, drawView, this);
 					game.start();
 				}
@@ -60,15 +65,15 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 
 	}
 
-    public void firePlayer1(View v) {
-	    game.firePlayer1();
-    }
+	public void firePlayer1(View v) {
+		game.firePlayer1();
+	}
 
-    public void firePlayer2(View v) {
-	    game.firePlayer2();
-    }
+	public void firePlayer2(View v) {
+		game.firePlayer2();
+	}
 
-    public void player1Wins(boolean player1Wins) {
+	public void player1Wins(boolean player1Wins) {
 		this.player1Wins = player1Wins;
 	}
 
@@ -81,5 +86,15 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 			String text = "GAME OVER! Player 1 Wins!";
 			winner.setText(text);
 		}
+	}
+
+	public void restart(View v) {
+		Objects.requireNonNull(getSupportActionBar()).hide();
+		setContentView(R.layout.game_layout);
+		DrawView drawView = findViewById(R.id.draw_view);
+		drawView.setBackground(imageBitmap);
+		map.clear();
+		game = new Game(map, drawView, this);
+		game.start();
 	}
 }

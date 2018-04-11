@@ -21,60 +21,63 @@ class Game extends Thread {
 	public void run() {
 		Log.e("game", "init");
 		Tank player2 = new Tank(map.getWidth() / 2, map.getWidth() / 8, map.getWidth() / 15, false);
-		Tank player1 = new Tank(map.getWidth() / 2, map.getHeight() - 3 * map.getWidth() / 8, map.getWidth() / 15, true);
+		Tank player1 = new Tank(map.getWidth() / 2, map.getHeight() - map.getWidth() / 8, map.getWidth() / 15, true);
 		map.setEntity(player1.getXpos(), player1.getYpos(), player1);
 		map.setEntity(player2.getXpos(), player2.getYpos(), player2);
 		ArrayList<Bullet> bullets = new ArrayList<>();
 		Bullet bullet;
-		try {
-			while (true) {
-				if (firePlayer1) {
-					bullet = player1.fire(map);
-					if (bullet != null) {
-						map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
-						bullets.add(bullet);
-					}
-					firePlayer1 = false;
-				}
-				if (firePlayer2) {
-					bullet = player2.fire(map);
-					if (bullet != null) {
-						map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
-						bullets.add(bullet);
-					}
-					firePlayer2 = false;
-				}
-				if (movePlayer1) {
-					player1.move(player1XPercentage, player1YPercentage, map);
-					movePlayer1 = false;
-				}
-				if (movePlayer2) {
-					player2.move(player2XPercentage, player2YPercentage, map);
-					movePlayer2 = false;
-				}
-				if (player1.isDead()) {
-					main.player1Wins(false);
-					main.runOnUiThread(main);
-					break;
-				} else if (player2.isDead()) {
-					main.player1Wins(true);
-					main.runOnUiThread(main);
-					break;
-				}
-
-				for (int i = 0; i < bullets.size(); i++) {
-					bullet = bullets.get(i);
-					if (!bullet.isAlive()) {
-						bullets.remove(bullet);
-						map.setEntity(bullet.getXpos(), bullet.getYpos(), null);
-					} else {
-						bullet.updatePosition(map);
-					}
-				}
-				drawView.updateMap(map);
-				Thread.sleep(5);
+		while (true) {
+			if (System.currentTimeMillis() % 10 > 1) {
+				continue;
 			}
-		} catch (InterruptedException ignored) {
+			if (firePlayer1) {
+				bullet = player1.fire(map);
+				if (bullet != null) {
+					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
+					bullets.add(bullet);
+				}
+				firePlayer1 = false;
+			}
+			if (firePlayer2) {
+				bullet = player2.fire(map);
+				if (bullet != null) {
+					map.setEntity(bullet.getXpos(), bullet.getYpos(), bullet);
+					bullets.add(bullet);
+				}
+				firePlayer2 = false;
+			}
+			if (movePlayer1) {
+				player1.move(player1XPercentage, player1YPercentage, map);
+				movePlayer1 = false;
+			} else {
+				player1.checkCollision(player1.getXpos(), player1.getYpos(), map);
+			}
+			if (movePlayer2) {
+				player2.move(player2XPercentage, player2YPercentage, map);
+				movePlayer2 = false;
+			} else {
+				player2.checkCollision(player2.getXpos(), player2.getYpos(), map);
+			}
+			if (player1.isDead()) {
+				main.player1Wins(false);
+				main.runOnUiThread(main);
+				break;
+			} else if (player2.isDead()) {
+				main.player1Wins(true);
+				main.runOnUiThread(main);
+				break;
+			}
+
+			for (int i = 0; i < bullets.size(); i++) {
+				bullet = bullets.get(i);
+				if (!bullet.isAlive()) {
+					bullets.remove(bullet);
+					map.setEntity(bullet.getXpos(), bullet.getYpos(), null);
+				} else {
+					bullet.updatePosition(map);
+				}
+			}
+			drawView.updateMap(map);
 		}
 	}
 
