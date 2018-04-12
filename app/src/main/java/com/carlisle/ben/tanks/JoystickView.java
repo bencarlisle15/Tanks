@@ -22,7 +22,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
 	private void setupDimensions() {
 		centerX = getWidth() / 2;
 		centerY = getHeight() / 2;
-		baseRadius = Math.min(getWidth(), getHeight()) / 3;
+		baseRadius = (int) (0.3 * Math.min(getWidth(), getHeight()));
 		hatRadius = Math.min(getWidth(), getHeight()) / 5;
 	}
 
@@ -71,7 +71,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
 
 			//Draw the base first before shading
 			colors.setARGB(255, 100, 100, 100);
-			myCanvas.drawCircle(centerX, centerY, baseRadius, colors);
+			myCanvas.drawCircle(centerX, centerY, (int) (0.9 * baseRadius), colors);
 			int ratio = 3;
 			for (int i = 1; i <= (int) (baseRadius / ratio); i++) {
 				colors.setARGB(150 / i, 255, 0, 0); //Gradually decrease the shade of black drawn to create a nice shading effect
