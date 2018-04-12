@@ -5,7 +5,7 @@ public class Bullet extends Entity {
 	private boolean alive = true;
 	private final double xPercentage;
 	private final double yPercentage;
-	public final static int SPEED = 4;
+	public final static int SPEED = 10;
 	private final boolean isPlayer1;
 
 	// xpos and ypos are of the tank

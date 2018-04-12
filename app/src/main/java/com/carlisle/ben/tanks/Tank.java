@@ -34,8 +34,8 @@ class Tank extends Entity implements Runnable {
 
 	public Bullet fire(Map map) {
 		if (canFire) {
-			int xpos = (int) (getXpos() + Bullet.SPEED * xPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
-			int ypos = (int) (getYpos() + Bullet.SPEED * yPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
+			int xpos = (int) (getXpos() + (Bullet.SPEED+width) * xPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
+			int ypos = (int) (getYpos() + (Bullet.SPEED + width) * yPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
 			if (xpos < 0 || ypos < 0 || xpos >= map.getWidth() || ypos >= map.getHeight()) {
 				return null;
 			} else {
@@ -104,10 +104,12 @@ class Tank extends Entity implements Runnable {
 			return 2;
 		} else if (map.getEntity(newX, newY) == null) {
 			return 0;
-		} else if ((map.getEntity(newX, newY)) instanceof Bullet && newX != 0 && newY != 0) {
+		} else if (map.getEntity(newX, newY) instanceof Bullet && newX != 0 && newY != 0) {
 			if (((Bullet) map.getEntity(newX, newY)).isPlayer1() != isPlayer1) {
 				toDelete.add(map.getEntity(newX, newY));
 				return 1;
+			} else {
+				return 0;
 			}
 		} else if (map.getEntity(newX, newY) == this) {
 			return 0;
