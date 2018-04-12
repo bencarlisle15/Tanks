@@ -37,47 +37,51 @@ public class DrawView extends View {
 	@SuppressLint("DrawAllocation")
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		g.setAntiAlias(false);
-		canvas.drawBitmap(image, null, rect, g);
-		for (Entity[] e : map.getEntities()) {
-			for (Entity entity : e) {
-				if (entity != null) {
-					if (entity instanceof Tank) {
-						Tank tank = (Tank) entity;
-						g.setStrokeWidth(4);
-						g.setStyle(Paint.Style.FILL_AND_STROKE);
-						switch (tank.getLives()) {
-							case 3:
-								g.setColor(Color.GREEN);
-								break;
-							case 2:
-								g.setColor(Color.BLUE);
-								break;
-							case 1:
-								g.setColor(Color.MAGENTA);
-								break;
-						}
-						canvas.drawCircle(tank.getXpos(), tank.getYpos(), (float) tank.getRadius(), g);
-						double h = Math.sqrt(tank.getXPercentage() * tank.getXPercentage() + tank.getYPercentage() * tank.getYPercentage());
-						g.setStyle(Paint.Style.FILL_AND_STROKE);
-						g.setColor(Color.BLACK);
-						if (h == 0) {
-							canvas.drawCircle(tank.getXpos(), tank.getYpos(), 10, g);
-						} else {
-							canvas.drawCircle((int) (tank.getXpos() + tank.getRadius() * tank.getXPercentage() / (2 * h)), (int) (tank.getYpos() + tank.getRadius() * tank.getYPercentage() / (2 * h)), 10, g);
-						}
+		if (map != null) {
+			g.setAntiAlias(false);
+			canvas.drawBitmap(image, null, rect, g);
+			for (Entity[] e : map.getEntities()) {
+				for (Entity entity : e) {
+					if (entity != null) {
+						if (entity instanceof Tank) {
+							Tank tank = (Tank) entity;
+							g.setStrokeWidth(4);
+							g.setStyle(Paint.Style.FILL_AND_STROKE);
+							switch (tank.getLives()) {
+								case 3:
+									g.setColor(Color.GREEN);
+									break;
+								case 2:
+									g.setColor(Color.BLUE);
+									break;
+								case 1:
+									g.setColor(Color.MAGENTA);
+									break;
+							}
+							canvas.drawCircle(tank.getXpos(), tank.getYpos(), (float) tank.getRadius(), g);
+							double h = Math.sqrt(tank.getXPercentage() * tank.getXPercentage() + tank.getYPercentage() * tank.getYPercentage());
+							g.setStyle(Paint.Style.FILL_AND_STROKE);
+							g.setColor(Color.BLACK);
+							if (h == 0) {
+								canvas.drawCircle(tank.getXpos(), tank.getYpos(), 10, g);
+							} else {
+								canvas.drawCircle((int) (tank.getXpos() + tank.getRadius() * tank.getXPercentage() / (2 * h)), (int) (tank.getYpos() + tank.getRadius() * tank.getYPercentage() / (2 * h)), 10, g);
+							}
 
-					} else if (entity instanceof Bullet) {
-						int x = entity.getXpos();
-						int y = entity.getYpos();
-						g.setColor(Color.RED);
-						g.setStyle(Paint.Style.FILL);
-						canvas.drawCircle(x, y, 10, g);
-//					} else if (entity instanceof Wall) {
-//						canvas.drawPoint(entity.getXpos(), entity.getYpos(), g);
+						} else if (entity instanceof Bullet) {
+							int x = entity.getXpos();
+							int y = entity.getYpos();
+							g.setColor(Color.RED);
+							g.setStyle(Paint.Style.FILL);
+							canvas.drawCircle(x, y, 10, g);
+		//					} else if (entity instanceof Wall) {
+		//						canvas.drawPoint(entity.getXpos(), entity.getYpos(), g);
+						}
 					}
 				}
 			}
+		} else {
+			postInvalidate();
 		}
 	}
 

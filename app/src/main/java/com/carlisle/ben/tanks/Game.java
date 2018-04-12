@@ -16,6 +16,7 @@ class Game extends Thread {
 		this.map = map;
 		this.drawView = drawView;
 		this.main = main;
+		drawView.updateMap(map);
 	}
 
 	public void run() {

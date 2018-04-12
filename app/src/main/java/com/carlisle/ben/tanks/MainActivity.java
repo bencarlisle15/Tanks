@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import static com.carlisle.ben.tanks.R.layout.game_layout;
-
-public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable, ViewTreeObserver.OnGlobalLayoutListener {
+public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable {
 
 	private Game game;
 	private boolean player1Wins;
@@ -53,14 +50,13 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 			if (extras != null) {
 				imageBitmap = (Bitmap) extras.get("data");
 				if (imageBitmap != null) {
-					setContentView(game_layout);
+					setContentView(R.layout.game_layout);
 					final DrawView drawView = findViewById(R.id.draw_view);
 					imageBitmap = Bitmap.createScaledBitmap(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight(), false);
 					drawView.setBackground(imageBitmap);
 					map = new Map(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight());
 					game = new Game(map, drawView, this);
 					game.start();
-					findViewById(R.id.main_game).getViewTreeObserver().addOnGlobalLayoutListener(this);
 				}
 			}
 		}
@@ -87,23 +83,14 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 			String text = "GAME OVER! Player 1 Wins!";
 			winner.setText(text);
 		}
-		game = null;
 	}
 
 	public void restart(View v) {
-		setContentView(game_layout);
+		setContentView(R.layout.game_layout);
 		DrawView drawView = findViewById(R.id.draw_view);
 		drawView.setBackground(imageBitmap);
 		map.clear();
 		game = new Game(map, drawView, this);
-		findViewById(R.id.main_game).getViewTreeObserver().addOnGlobalLayoutListener(this);
-	}
-
-	@Override
-	public void onGlobalLayout() {
-		if (game != null && game.getState() == Thread.State.NEW) {
-			game.start();
-			findViewById(R.id.main_game).getViewTreeObserver().removeOnGlobalLayoutListener(this);
-		}
+		game.start();
 	}
 }

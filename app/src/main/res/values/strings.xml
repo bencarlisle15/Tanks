@@ -4,4 +4,6 @@
     <string name="fire">FIRE!</string>
     <string name="over">GAME OVER! Player 2 Wins</string>
     <string name="samemap">Restart With the Same Map</string>
+    <string name="restart">Restart</string>
+    <string name="upload_new">New Map</string>
 </resources>
