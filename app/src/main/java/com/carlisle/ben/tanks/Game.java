@@ -50,13 +50,13 @@ class Game extends Thread {
 				player1.move(player1XPercentage, player1YPercentage, map);
 				movePlayer1 = player1XPercentage != 0 || player1YPercentage != 0;
 			} else {
-				player1.checkCollision(player1.getXpos(), player1.getYpos(), map);
+				player1.checkCollision(player1.getXpos(), player1.getYpos(), map, false);
 			}
 			if (movePlayer2) {
 				player2.move(player2XPercentage, player2YPercentage, map);
 				movePlayer2 = player2XPercentage != 0 || player2YPercentage != 0;
 			} else {
-				player2.checkCollision(player2.getXpos(), player2.getYpos(), map);
+				player2.checkCollision(player2.getXpos(), player2.getYpos(), map, false);
 			}
 			if (player1.isDead()) {
 				main.player1Wins(false);

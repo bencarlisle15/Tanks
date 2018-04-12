@@ -34,7 +34,7 @@ class Tank extends Entity implements Runnable {
 
 	public Bullet fire(Map map) {
 		if (canFire) {
-			int xpos = (int) (getXpos() + (Bullet.SPEED+width) * xPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
+			int xpos = (int) (getXpos() + (Bullet.SPEED + width) * xPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
 			int ypos = (int) (getYpos() + (Bullet.SPEED + width) * yPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
 			if (xpos < 0 || ypos < 0 || xpos >= map.getWidth() || ypos >= map.getHeight()) {
 				return null;
@@ -55,10 +55,10 @@ class Tank extends Entity implements Runnable {
 		speed = (int) (Math.sqrt(this.xPercentage * this.xPercentage + this.yPercentage * this.yPercentage) * 10);
 		int new_xPos = get_new_xPos(this.xPercentage);
 		int new_yPos = get_new_yPos(this.yPercentage);
-		checkCollision(new_xPos, new_yPos, map);
+		checkCollision(new_xPos, new_yPos, map, false);
 	}
 
-	public void checkCollision(int nextXPos, int nextYPos, Map map) {
+	public void checkCollision(int nextXPos, int nextYPos, Map map, boolean noWalls) {
 		int newX;
 		int newY;
 		int status = 0;
@@ -69,16 +69,16 @@ class Tank extends Entity implements Runnable {
 				}
 				newX = nextXPos - r;
 				newY = nextYPos - c;
-				status = Math.max(checkPos(newX, newY, map), status);
+				status = Math.max(checkPos(newX, newY, map, noWalls), status);
 				newX = nextXPos + r;
 				newY = nextYPos - c;
-				status = Math.max(checkPos(newX, newY, map), status);
+				status = Math.max(checkPos(newX, newY, map, noWalls), status);
 				newX = nextXPos - r;
 				newY = nextYPos + c;
-				status = Math.max(checkPos(newX, newY, map), status);
+				status = Math.max(checkPos(newX, newY, map, noWalls), status);
 				newX = nextXPos + r;
 				newY = nextYPos + c;
-				status = Math.max(checkPos(newX, newY, map), status);
+				status = Math.max(checkPos(newX, newY, map, noWalls), status);
 			}
 		}
 		if (status == 0) {
@@ -95,13 +95,15 @@ class Tank extends Entity implements Runnable {
 				map.moveEntity(getXpos(), getYpos(), nextXPos, nextYPos);
 				setPosition(nextXPos, nextYPos);
 			}
+		} else if (!noWalls) {
+			toDelete.clear();
+			checkCollision(getXpos(), getYpos(), map, true);
 		}
-		toDelete.clear();
 	}
 
-	private int checkPos(int newX, int newY, Map map) {
+	private int checkPos(int newX, int newY, Map map, boolean noWalls) {
 		if (newX < 0 || newY < 0 || newX >= map.getWidth() || newY >= map.getHeight()) {
-			return 2;
+			return noWalls ? 0 : 2;
 		} else if (map.getEntity(newX, newY) == null) {
 			return 0;
 		} else if (map.getEntity(newX, newY) instanceof Bullet && newX != 0 && newY != 0) {
@@ -114,7 +116,7 @@ class Tank extends Entity implements Runnable {
 		} else if (map.getEntity(newX, newY) == this) {
 			return 0;
 		}
-		return 2;
+		return noWalls ? 0 : 2;
 	}
 
 	public int getLives() {
