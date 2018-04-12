@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
@@ -16,7 +15,7 @@ public class DrawView extends View {
 	private final Paint g = new Paint();
 	private Map map;
 	private Bitmap image;
-	private final Path path = new Path();
+	private Rect rect;
 
 	public DrawView(Context context) {
 		super(context);
@@ -39,7 +38,7 @@ public class DrawView extends View {
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		g.setAntiAlias(false);
-		canvas.drawBitmap(image, null, new Rect(0, 0, getWidth(), getHeight()), g);
+		canvas.drawBitmap(image, null, rect, g);
 		for (Entity[] e : map.getEntities()) {
 			for (Entity entity : e) {
 				if (entity != null) {
@@ -91,13 +90,13 @@ public class DrawView extends View {
 							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 							| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-							| View.SYSTEM_UI_FLAG_FULLSCREEN
-							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+							| View.SYSTEM_UI_FLAG_FULLSCREEN);
 		}
 	}
 
 	public void setBackground(Bitmap image) {
 		this.image = image;
+		rect = new Rect(0, 0, image.getWidth(), image.getHeight());
 	}
 
 }

@@ -7,10 +7,9 @@ class Map {
 
 	public Map(Bitmap image, int gameWidth, int gameHeight) {
 		entities = new Entity[gameWidth][gameHeight];
-		Bitmap newImage = Bitmap.createScaledBitmap(image, gameWidth, gameHeight, false);
 		for (int r = 0; r < gameWidth; r++) {
 			for (int c = 0; c < gameHeight; c++) {
-				if (getEntity(r, c) == null && isWall(newImage.getPixel(r, c)) || c == 0 || r == 0 || r == newImage.getWidth() - 1 || c == newImage.getHeight() - 1) {
+				if (getEntity(r, c) == null && isWall(image.getPixel(r, c)) || c == 0 || r == 0 || r == image.getWidth() - 1 || c == image.getHeight() - 1) {
 					entities[r][c] = new Wall(r, c);
 				} else {
 					entities[r][c] = null;

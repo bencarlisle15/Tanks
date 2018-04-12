@@ -13,14 +13,13 @@ class Tank extends Entity implements Runnable {
 	private double xPercentage, yPercentage;
 	private final boolean isPlayer1;
 	private boolean isDead = false;
-	private ArrayList<Entity> toDelete = new ArrayList<>();
+	private final ArrayList<Entity> toDelete = new ArrayList<>();
 
 
 	public Tank(int xPos, int yPos, int width, boolean isPlayer1) {
 		super(xPos, yPos);
 		canFire = true;
 		lives = 3;
-		boolean isShootBottomPressed = false;
 		this.width = width;
 		this.isPlayer1 = isPlayer1;
 	}

@@ -10,8 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable {
 
 	private Game game;
@@ -25,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
-		Objects.requireNonNull(getSupportActionBar()).hide();
 	}
 
 	public void promptImage(View view) {
@@ -54,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 				imageBitmap = (Bitmap) extras.get("data");
 				if (imageBitmap != null) {
 					setContentView(R.layout.game_layout);
-					DrawView drawView = findViewById(R.id.draw_view);
+					final DrawView drawView = findViewById(R.id.draw_view);
+					imageBitmap = Bitmap.createScaledBitmap(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight(), false);
 					drawView.setBackground(imageBitmap);
 					map = new Map(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight());
 					game = new Game(map, drawView, this);
@@ -62,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 				}
 			}
 		}
-
 	}
 
 	public void firePlayer1(View v) {
@@ -89,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 	}
 
 	public void restart(View v) {
-		Objects.requireNonNull(getSupportActionBar()).hide();
 		setContentView(R.layout.game_layout);
 		DrawView drawView = findViewById(R.id.draw_view);
 		drawView.setBackground(imageBitmap);
