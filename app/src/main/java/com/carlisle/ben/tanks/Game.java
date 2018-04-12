@@ -27,7 +27,7 @@ class Game extends Thread {
 		ArrayList<Bullet> bullets = new ArrayList<>();
 		Bullet bullet;
 		while (true) {
-			if (System.currentTimeMillis() % 10 > 1) {
+			if (System.currentTimeMillis() % 20 > 0) {
 				continue;
 			}
 			if (firePlayer1) {
@@ -48,13 +48,13 @@ class Game extends Thread {
 			}
 			if (movePlayer1) {
 				player1.move(player1XPercentage, player1YPercentage, map);
-				movePlayer1 = false;
+				movePlayer1 = player1XPercentage != 0 || player1YPercentage != 0;
 			} else {
 				player1.checkCollision(player1.getXpos(), player1.getYpos(), map);
 			}
 			if (movePlayer2) {
 				player2.move(player2XPercentage, player2YPercentage, map);
-				movePlayer2 = false;
+				movePlayer2 = player2XPercentage != 0 || player2YPercentage != 0;
 			} else {
 				player2.checkCollision(player2.getXpos(), player2.getYpos(), map);
 			}
