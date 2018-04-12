@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/main_game"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -59,7 +60,8 @@
         android:rotation="90"
         android:text="@string/restart"
         android:onClick="restart"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        tools:ignore="RelativeOverlap"/>
 
     <Button
         android:rotation="270"
@@ -70,5 +72,6 @@
         android:layout_centerVertical="true"
         android:text="@string/upload_new"
         android:onClick="promptImage"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        tools:ignore="RelativeOverlap"/>
 </RelativeLayout>

@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <pattern value="com.carlisle.ben.tanks.DrawView" method="DrawView" />
+    <pattern value="com.carlisle.ben.tanks.DrawView" />
+    <pattern value="com.carlisle.ben.tanks.ExampleInstrumentedTest" method="useAppContext" />
+    <pattern value="com.carlisle.ben.tanks.ExampleInstrumentedTest" />
+    <pattern value="com.carlisle.ben.tanks.ExampleUnitTest" method="addition_isCorrect" />
+    <pattern value="com.carlisle.ben.tanks.ExampleUnitTest" />
+    <pattern value="com.carlisle.ben.tanks.JoystickView" method="JoystickView" />
+    <pattern value="com.carlisle.ben.tanks.JoystickView" />
+    <pattern value="com.carlisle.ben.tanks.MainActivity" method="restart" />
+    <pattern value="com.carlisle.ben.tanks.MainActivity" method="firePlayer2" />
+    <pattern value="com.carlisle.ben.tanks.MainActivity" method="firePlayer1" />
+    <pattern value="com.carlisle.ben.tanks.MainActivity" method="promptImage" />
+    <pattern value="com.carlisle.ben.tanks.MainActivity" />
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
