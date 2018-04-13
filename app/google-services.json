@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1022988347752",
+    "firebase_url": "https://tanks-36ac5.firebaseio.com",
+    "project_id": "tanks-36ac5",
+    "storage_bucket": "tanks-36ac5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022988347752:android:869f8af0a3e61bef",
+        "android_client_info": {
+          "package_name": "com.carlisle.ben.tanks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022988347752-sslp2364f4uf47kqbai7n2m1m3p682f5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carlisle.ben.tanks",
+            "certificate_hash": "1fcfa9c47a9b2a79265338ccae554815ee083b67"
+          }
+        },
+        {
+          "client_id": "1022988347752-nrffufg0l5q3slrk2tc6qg8ajde4u1jh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp9KWuvWIwwZua_wfb6PO4Fin3WpouW6Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022988347752-nrffufg0l5q3slrk2tc6qg8ajde4u1jh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -78,7 +78,7 @@
             android:text="@string/restart"
             android:onClick="restart"
             android:textSize="12dp"
-            tools:ignore="RelativeOverlap"/>
+            tools:ignore="RelativeOverlap,SpUsage"/>
 
         <Button
             android:rotation="270"
@@ -90,7 +90,7 @@
             android:text="@string/upload_new"
             android:onClick="promptImage"
             android:textSize="12dp"
-            tools:ignore="RelativeOverlap"/>
+            tools:ignore="RelativeOverlap,SpUsage"/>
     </RelativeLayout>
 
 </RelativeLayout>
