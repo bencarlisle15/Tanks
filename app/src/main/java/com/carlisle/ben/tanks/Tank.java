@@ -9,18 +9,17 @@ class Tank extends Entity implements Runnable {
 	private boolean canFire;
 	private int speed;
 	private int lives;
-	private final int width;
 	private double xPercentage, yPercentage;
 	private final boolean isPlayer1;
 	private boolean isDead = false;
 	private final ArrayList<Entity> toDelete = new ArrayList<>();
+	public static int RADIUS = 5;
 
 
-	public Tank(int xPos, int yPos, int width, boolean isPlayer1) {
+	public Tank(int xPos, int yPos, boolean isPlayer1) {
 		super(xPos, yPos);
 		canFire = true;
 		lives = 3;
-		this.width = width;
 		this.isPlayer1 = isPlayer1;
 	}
 
@@ -34,8 +33,8 @@ class Tank extends Entity implements Runnable {
 
 	public Bullet fire(Map map) {
 		if (canFire) {
-			int xpos = (int) (getXpos() + (Bullet.SPEED + width) * xPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
-			int ypos = (int) (getYpos() + (Bullet.SPEED + width) * yPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
+			int xpos = (int) (getXpos() + (Bullet.SPEED + RADIUS) * xPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
+			int ypos = (int) (getYpos() + (Bullet.SPEED + RADIUS) * yPercentage / Math.sqrt(xPercentage * xPercentage + yPercentage * yPercentage));
 			if (xpos < 0 || ypos < 0 || xpos >= map.getWidth() || ypos >= map.getHeight()) {
 				return null;
 			} else {
@@ -45,6 +44,10 @@ class Tank extends Entity implements Runnable {
 			}
 		}
 		return null;
+	}
+
+	public static void setRadius(int newRadius) {
+		RADIUS = newRadius;
 	}
 
 	public void move(float xPercentage, float yPercentage, Map map) {
@@ -62,9 +65,10 @@ class Tank extends Entity implements Runnable {
 		int newX;
 		int newY;
 		int status = 0;
-		for (int r = 0; r < getRadius(); r++) {
-			for (int c = 0; c < getRadius(); c++) {
-				if (Math.sqrt(r * r + c * c) > width) {
+		toDelete.clear();
+		for (int r = 0; r < RADIUS; r++) {
+			for (int c = 0; c < RADIUS; c++) {
+				if (Math.sqrt(r * r + c * c) > RADIUS) {
 					continue;
 				}
 				newX = nextXPos - r;
@@ -87,8 +91,10 @@ class Tank extends Entity implements Runnable {
 		} else if (status == 1) {
 			for (Entity bullet : toDelete) {
 				map.setEntity(bullet.getXpos(), bullet.getYpos(), null);
+				Log.e("HIT", String.valueOf(isPlayer1));
 				lives--;
 			}
+			toDelete.clear();
 			if (lives <= 0) {
 				destoryTank(map);
 			} else {
@@ -96,7 +102,6 @@ class Tank extends Entity implements Runnable {
 				setPosition(nextXPos, nextYPos);
 			}
 		} else if (!noWalls) {
-			toDelete.clear();
 			checkCollision(getXpos(), getYpos(), map, true);
 		}
 	}
@@ -131,10 +136,6 @@ class Tank extends Entity implements Runnable {
 
 	public boolean isDead() {
 		return isDead;
-	}
-
-	public double getRadius() {
-		return width;
 	}
 
 	public double getXPercentage() {

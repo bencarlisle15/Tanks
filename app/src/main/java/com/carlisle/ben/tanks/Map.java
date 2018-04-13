@@ -5,10 +5,10 @@ import android.graphics.Bitmap;
 class Map {
 	private final Entity[][] entities;
 
-	public Map(Bitmap image, int gameWidth, int gameHeight) {
-		entities = new Entity[gameWidth][gameHeight];
-		for (int r = 0; r < gameWidth; r++) {
-			for (int c = 0; c < gameHeight; c++) {
+	public Map(Bitmap image) {
+		entities = new Entity[image.getWidth()][image.getHeight()];
+		for (int r = 0; r < image.getWidth(); r++) {
+			for (int c = 0; c < image.getWidth(); c++) {
 				if (getEntity(r, c) == null && isWall(image.getPixel(r, c)) || c == 0 || r == 0 || r == image.getWidth() - 1 || c == image.getHeight() - 1) {
 					entities[r][c] = new Wall(r, c);
 				} else {

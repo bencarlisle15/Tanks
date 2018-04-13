@@ -6,16 +6,23 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable {
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+public class MainActivity extends AppCompatActivity implements JoystickView.JoystickListener, Runnable, ViewTreeObserver.OnGlobalLayoutListener {
 
 	private Game game;
 	private boolean player1Wins;
 	private Map map;
 	private Bitmap imageBitmap;
+	private static final String TAG = "MainActivity";
+	private AdView mAdView;
+	private AdRequest adRequest;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
+		mAdView = findViewById(R.id.adView);
+		adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
 	}
 
 	public void promptImage(View view) {
@@ -45,21 +55,31 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 0) {
+		if (requestCode == 0 && data != null) {
 			Bundle extras = data.getExtras();
 			if (extras != null) {
 				imageBitmap = (Bitmap) extras.get("data");
 				if (imageBitmap != null) {
 					setContentView(R.layout.game_layout);
-					final DrawView drawView = findViewById(R.id.draw_view);
-					imageBitmap = Bitmap.createScaledBitmap(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight(), false);
-					drawView.setBackground(imageBitmap);
-					map = new Map(imageBitmap, drawView.getRootView().getWidth(), drawView.getRootView().getHeight());
-					game = new Game(map, drawView, this);
-					game.start();
+					mAdView = findViewById(R.id.adView);
+					adRequest = new AdRequest.Builder().build();
+					mAdView.loadAd(adRequest);
+					findViewById(R.id.draw_view).getViewTreeObserver().addOnGlobalLayoutListener(this);
 				}
 			}
 		}
+	}
+
+	@Override
+	public void onGlobalLayout() {
+		final DrawView drawView = findViewById(R.id.draw_view);
+		imageBitmap = Bitmap.createScaledBitmap(imageBitmap, drawView.getWidth(), drawView.getHeight(), false);
+		drawView.setBackground(imageBitmap);
+		map = new Map(imageBitmap);
+		game = new Game(map, drawView, this);
+		game.start();
+		drawView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
 	}
 
 	public void firePlayer1(View v) {
@@ -83,10 +103,16 @@ public class MainActivity extends AppCompatActivity implements JoystickView.Joys
 			String text = "GAME OVER! Player 1 Wins!";
 			winner.setText(text);
 		}
+		mAdView = findViewById(R.id.adView);
+		adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
 	}
 
 	public void restart(View v) {
 		setContentView(R.layout.game_layout);
+		mAdView = findViewById(R.id.adView);
+		adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
 		DrawView drawView = findViewById(R.id.draw_view);
 		drawView.setBackground(imageBitmap);
 		map.clear();

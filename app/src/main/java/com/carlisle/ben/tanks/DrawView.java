@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -58,14 +59,14 @@ public class DrawView extends View {
 									g.setColor(Color.MAGENTA);
 									break;
 							}
-							canvas.drawCircle(tank.getXpos(), tank.getYpos(), (float) tank.getRadius(), g);
+							canvas.drawCircle(tank.getXpos(), tank.getYpos(), (float) Tank.RADIUS, g);
 							double h = Math.sqrt(tank.getXPercentage() * tank.getXPercentage() + tank.getYPercentage() * tank.getYPercentage());
 							g.setStyle(Paint.Style.FILL_AND_STROKE);
 							g.setColor(Color.BLACK);
 							if (h == 0) {
-								canvas.drawCircle(tank.getXpos(), tank.getYpos(), 10, g);
+								canvas.drawCircle(tank.getXpos(), tank.getYpos(), Tank.RADIUS/7, g);
 							} else {
-								canvas.drawCircle((int) (tank.getXpos() + tank.getRadius() * tank.getXPercentage() / (2 * h)), (int) (tank.getYpos() + tank.getRadius() * tank.getYPercentage() / (2 * h)), 10, g);
+								canvas.drawCircle((int) (tank.getXpos() + Tank.RADIUS * tank.getXPercentage() / (2 * h)), (int) (tank.getYpos() + Tank.RADIUS * tank.getYPercentage() / (2 * h)), Tank.RADIUS/7, g);
 							}
 
 						} else if (entity instanceof Bullet) {
@@ -73,9 +74,9 @@ public class DrawView extends View {
 							int y = entity.getYpos();
 							g.setColor(Color.RED);
 							g.setStyle(Paint.Style.FILL);
-							canvas.drawCircle(x, y, 10, g);
-		//					} else if (entity instanceof Wall) {
-		//						canvas.drawPoint(entity.getXpos(), entity.getYpos(), g);
+							canvas.drawCircle(x, y, Tank.RADIUS/7, g);
+//							} else if (entity instanceof Wall) {
+//								canvas.drawPoint(entity.getXpos(), entity.getYpos(), g);
 						}
 					}
 				}
@@ -86,15 +87,16 @@ public class DrawView extends View {
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
+	public void onFocusChanged(boolean hasFocus, int direction, Rect rect) {
+		super.onFocusChanged(hasFocus, direction, rect);
 		if (hasFocus) {
-			setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-							| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-							| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-							| View.SYSTEM_UI_FLAG_FULLSCREEN);
+				setSystemUiVisibility(
+						View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+								| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+								| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+								| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+								| View.SYSTEM_UI_FLAG_FULLSCREEN);
+			
 		}
 	}
 

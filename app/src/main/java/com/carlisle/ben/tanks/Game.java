@@ -21,8 +21,9 @@ class Game extends Thread {
 
 	public void run() {
 		Log.e("game", "init");
-		Tank player2 = new Tank(map.getWidth() / 2, map.getWidth() / 8, map.getWidth() / 15, false);
-		Tank player1 = new Tank(map.getWidth() / 2, map.getHeight() - map.getWidth() / 8, map.getWidth() / 15, true);
+		Tank.setRadius(map.getWidth()/20);
+		Tank player2 = new Tank(map.getWidth() / 2, map.getWidth() / 8, false);
+		Tank player1 = new Tank(map.getWidth() / 2, map.getHeight() - map.getWidth() / 8, true);
 		map.setEntity(player1.getXpos(), player1.getYpos(), player1);
 		map.setEntity(player2.getXpos(), player2.getYpos(), player2);
 		ArrayList<Bullet> bullets = new ArrayList<>();
